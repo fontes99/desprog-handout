@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <title>Algoritmo Needleman-Wunsch para alinhamento de sequências</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&display=swap">
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/script.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <main>
+
+<h1>Algoritmo Needleman-Wunsch para alinhamento de sequências</h1>
+
+<h2>To do: (cada item é um break)</h2>
+
+<ul><li>Explicar oq é (pra que serve)</li><li>Explicar a lógica</li><li>Implementação</li><li>Conclusão</li></ul>
+
+<blockquote><p>começo do handout</p></blockquote>
+
+<h2>Introdução</h2>
+
+<p>Com a recém descoberta do DNA, formado por cadeias de aminoácidos com bases
+nitrogenadas, Saul Needleman e Christian Wunsch, em 1969, foram atrás de 
+solucionar o problema de encontrar similaridades entre as estas, o que era
+uma necessidade para a área de estudo da genética.</p>
+
+<p>De forma geral, o algoritmo consiste em analisar duas palavras e verificar
+quantas mudanças seriam necessárias para tornar uma palavra igual a outra.</p>
+
+<h2>Exemplo</h2>
+
+<p>O algoritmo foi projetado para objetos do tipo <em>String</em> e, portanto, podemos
+começar entendendo com um exemplo utilizando palavras ao invés de bases
+nitrogenadas.</p>
+
+<p>Temos duas palavras muito semelhantes porém diferentes:</p>
+
+<pre class="nostalbox"><code class="nostalprint">   COERENCIA
+  OCORRENCIA</code></pre>
+
+<p>Desejamos que elas sejam iguais, para isso precisaremos realizar algumas mudanças.
+Manteremos a palavra &quot;<em>COERENCIA</em>&quot; como nosso padrão e alteraremos a palavra &quot;<em>OCORRENCIA</em>&quot;.</p>
+
+<p>Há 2 diferenças nestas palavras:</p>
+
+<ul><li>Número de caracteres diferentes</li><li>Pelo menos 1 caractere diferente da outra</li></ul>
+
+<p>Dessa forma podemos realizar pequenas e pontuais mudanças. Começaremos deletando o primeiro
+caractere de &quot;<em>OCORRENCIA</em>&quot;, pois como vemos em nossa base, ele não existe, assim temos:</p>
+
+<pre class="nostalbox"><code class="nostalprint">  COERENCIA
+  CORRENCIA </code></pre>
+
+<p>Agora percebemos que temos duas palavras muito próximas porém ainda há uma diferença: 
+o 3º caractere delas são diferentes</p>
+
+<blockquote><p>Se entendeu minimamente até aqui, pode continuar</p><p>Caso contrário, leia o exemplo novamente.</p></blockquote>
+
+<h2>Lógica</h2>
+
+<p>Este Algorítimo segue uma lógica em que iremos checar, por meio de uma matriz, 
+qual o numero de <em>alterações</em> que deve ser feita para tranformar a substring na 
+vertical na substring da horizontal</p>
+
+<p class="figure"><img alt="tabela 1" src="img/tabela-1.png" title="tabela 1" class="raster"/></p>
+
+<p>Na tabela acima, podemos ver que cada casa da matriz representa quantas ações são 
+feitas para transformar a substring correspondente da vertical na da horizontal.</p>
+
+<p>Vamos agora tentar preencher essa tabela </p>
+
+<blockquote><p>rascunhos</p></blockquote>
+
+<p>agora vai</p>
+
+<pre class="prettybox"><code class="prettyprint">print(&#39;Fala hélio&#39;)</code></pre>
+
+<p>| Tables   |      Are      |  Cool |
+|----------|:-------------:|------:|
+| col 1 is |  left-aligned | $1600 |
+| col 2 is |    centered   |   $12 |
+| col 3 is | right-aligned |    $1 |</p>
+
+<p>aaa
+| titulo  | 2 titulo  |
+|---------|-----------|
+| valor   |  valor 2  |</p>
+
+<p>aaaaa</p>
+
+<p>Isto é texto normal. Para mudar de parágrafo, pule uma linha.</p>
+
+<p>Em texto normal, você pode usar <em>itálico</em>, <strong>negrito</strong>, <code class="prettybox prettyprint">código</code> e <code class="nostalbox nostalprint">comando</code>.
+Como você pode ver nesse exemplo, o modo de código é para ser usado em texto de
+código-fonte. Quando você tenta escrever texto normal, efeitos estranhos podem
+acontecer, como essa cor diferente no &quot;o&quot; com acento agudo.</p>
+
+<p>Você também pode usar \(\LaTeX\), se souber. Tanto no meio (\(\sum^n_{i=1}i\))
+de parágrafos, quanto em parágrafos próprios centralizados:</p>
+
+<p>\[\sum^n_{i=1}i.\]</p>
+
+<p>Adicionalmente, também pode criar</p>
+
+<ul><li><p>listas</p></li><li><p>não-ordenadas,</p></li></ul>
+
+<p>assim como</p>
+
+<ol><li><p>listas</p></li><li><p>ordenadas.</p></li></ol>
+
+<p>Finalmente, também pode criar</p>
+
+<pre class="prettybox"><code class="prettyprint">print(&#39;código em parágrafo destacado,&#39;)</code></pre>
+
+<p>assim como</p>
+
+<pre class="nostalbox"><code class="nostalprint">comando em parágrafo destacado.</code></pre>
+
+<p>Nesses dois casos, espaços em branco e quebras de linha serão respeitados.</p>
+
+<h2>Exemplo de subtítulo</h2>
+
+<p>A notação para criar <a href="https://www.insper.edu.br/" target="_blank">um link</a> é bem simples.</p>
+
+<p>A notação para criar</p>
+
+<p class="figure"><img alt="uma imagem" src="img/exemplo.png" title="uma imagem" class="raster"/></p>
+
+<p>é bem parecida. Espera-se que todas as imagens estejam na pasta <em>img</em>.</p>
+
+<p>A notação para criar</p>
+
+<blockquote><p>um aviso</p></blockquote>
+
+<p>é mais simples ainda.</p>
+
+<p>Para terminar, só falta mostrar como criar uma pausa.</p>
+
+<blockquote><p>Não continue sem vir validar no canal geral.</p></blockquote>
+
+<h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
+
+<p>That&#39;s all Folks!</p>
+
+      </main>
+      <footer>
+        <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">
+          <img alt="Creative Commons Attribution-ShareAlike 4.0 International License" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png" title="Creative Commons Attribution-ShareAlike 4.0 International License"/>
+        </a>
+        © 2020 Desafios de Programação
+      </footer>
+    </div>
+  </body>
+</html>
