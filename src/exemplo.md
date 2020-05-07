@@ -30,7 +30,7 @@ nitrogenadas.
 
 Temos duas palavras muito semelhantes porém diferentes:
 
-    >  -COERENCIA
+    >  _COERENCIA
       OCORRENCIA
       
 
