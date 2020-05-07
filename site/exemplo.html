@@ -43,7 +43,7 @@ nitrogenadas.</p>
 
 <p>Temos duas palavras muito semelhantes porém diferentes:</p>
 
-<pre class="nostalbox"><code class="nostalprint">   COERENCIA
+<pre class="nostalbox"><code class="nostalprint">  -COERENCIA
   OCORRENCIA</code></pre>
 
 <p>Desejamos que elas sejam iguais, para isso precisaremos realizar algumas mudanças.
@@ -53,6 +53,11 @@ Manteremos a palavra &quot;<em>COERENCIA</em>&quot; como nosso padrão e alterar
 
 <ul><li>Número de caracteres diferentes</li><li>Pelo menos 1 caractere diferente da outra</li></ul>
 
+<p>Também é importante saber que existem 3 ações possíveis que podemos realizar para
+alcançar nosso objetivo:</p>
+
+<ul><li><strong>Alinhar</strong> um caractere de uma palavra na outra, sinônimo de copiar</li><li><strong>Inserir</strong> um caractere novo em uma das palavras</li><li><strong>Deletar</strong> um caractere de uma das palavras.</li></ul>
+
 <p>Dessa forma podemos realizar pequenas e pontuais mudanças. Começaremos deletando o primeiro
 caractere de &quot;<em>OCORRENCIA</em>&quot;, pois como vemos em nossa base, ele não existe, assim temos:</p>
 
@@ -60,9 +65,19 @@ caractere de &quot;<em>OCORRENCIA</em>&quot;, pois como vemos em nossa base, ele
   CORRENCIA </code></pre>
 
 <p>Agora percebemos que temos duas palavras muito próximas porém ainda há uma diferença: 
-o 3º caractere delas são diferentes</p>
+o 3º caractere delas são diferentes. </p>
+
+<p>Para resolver isto devemos tomar mais uma medida: devemos alinhar, ou &quot;copiar&quot;, o &quot;<em>R</em>&quot; de &quot;<em>CORRENCIA</em>&quot; 
+com o &quot;<em>E</em>&quot; de &quot;<em>COERENCIA</em>&quot;. Logo obtemos:</p>
+
+<pre class="nostalbox"><code class="nostalprint">  COERENCIA
+  COERENCIA</code></pre>
+
+<p>Perceba que as palavras, após 2 alterações, se tornaram iguais.</p>
 
 <blockquote><p>Se entendeu minimamente até aqui, pode continuar</p><p>Caso contrário, leia o exemplo novamente.</p></blockquote>
+
+<h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
 
 <h2>Lógica</h2>
 

@@ -30,7 +30,7 @@ nitrogenadas.
 
 Temos duas palavras muito semelhantes porém diferentes:
 
-    >   COERENCIA
+    >  -COERENCIA
       OCORRENCIA
       
 
@@ -42,6 +42,12 @@ Há 2 diferenças nestas palavras:
 * Número de caracteres diferentes
 * Pelo menos 1 caractere diferente da outra
 
+Também é importante saber que existem 3 ações possíveis que podemos realizar para
+alcançar nosso objetivo:
+
+* **Alinhar** um caractere de uma palavra na outra, sinônimo de copiar
+* **Inserir** um caractere novo em uma das palavras
+* **Deletar** um caractere de uma das palavras.
 
 Dessa forma podemos realizar pequenas e pontuais mudanças. Começaremos deletando o primeiro
 caractere de "*OCORRENCIA*", pois como vemos em nossa base, ele não existe, assim temos:
@@ -50,11 +56,21 @@ caractere de "*OCORRENCIA*", pois como vemos em nossa base, ele não existe, ass
       CORRENCIA 
 
 Agora percebemos que temos duas palavras muito próximas porém ainda há uma diferença: 
-o 3º caractere delas são diferentes
+o 3º caractere delas são diferentes. 
+
+Para resolver isto devemos tomar mais uma medida: devemos alinhar, ou "copiar", o "*R*" de "*CORRENCIA*" 
+com o "*E*" de "*COERENCIA*". Logo obtemos:
+
+    >  COERENCIA
+      COERENCIA
+
+Perceba que as palavras, após 2 alterações, se tornaram iguais.
 
 > Se entendeu minimamente até aqui, pode continuar
 > 
 > Caso contrário, leia o exemplo novamente.
+
+###
 
 Lógica
 ---
