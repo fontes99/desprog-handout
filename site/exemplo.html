@@ -19,12 +19,6 @@
 
 <h1>Algoritmo Needleman-Wunsch para alinhamento de sequências</h1>
 
-<h2>To do: (cada item é um break)</h2>
-
-<ul><li>Explicar oq é (pra que serve)</li><li>Explicar a lógica</li><li>Implementação</li><li>Conclusão</li></ul>
-
-<blockquote><p>começo do handout</p></blockquote>
-
 <h2>Introdução</h2>
 
 <p>Com a recém descoberta do DNA, formado por cadeias de aminoácidos com bases
@@ -159,7 +153,7 @@ Portanto, x = a+1 ou b+1 ou c+1. </p>
 
 <ul><li>Se escolhermos <em>a</em> iremos <strong>remover</strong> o caractére equivalente na horizontal</li><li>Se escolhermos <em>b</em> iremos <strong>alinhar</strong> o caractére equivalente na horizontal</li><li>Se escolhermos <em>c</em> iremos <strong>inserir</strong> o caractére equivalente na horizontal</li></ul>
 
-<p>Agora.. Qual escolher?? </p>
+<p>Agora... Qual escolher?? </p>
 
 <p>Tente deduzir qual seria o melhor.</p>
 
@@ -282,8 +276,8 @@ preenchida com zeros.</p>
 
 <p>Considerando que temos os valores de <em>x</em> e <em>y</em>, podemos deduzir como ficaria o código a seguir:</p>
 
-<pre class="prettybox"><code class="prettyprint">x = &quot;TGCCTAG&quot;
-y = &quot;TCCAGT&quot;
+<pre class="prettybox"><code class="prettyprint">x = &quot;TCCAGT&quot;
+y = &quot;TGCCTAG&quot;
 z = prepara_matriz(x, y)
 
 print(z)</code></pre>
@@ -320,11 +314,11 @@ print(z)</code></pre>
 
     for l in range(1, len(x) + 1):
         # primeira linha
-        matriz[0][l] = l
+        matriz[l][0] = l
 
     for c in range(1, len(y) + 1):
         # primeira coluna
-        matriz[c][0] = c
+        matriz[0][c] = c
 
     return matriz</code></pre>
 
@@ -335,7 +329,8 @@ print(z)</code></pre>
 [2, 0, 0, 0, 0, 0, 0, 0], 
 [3, 0, 0, 0, 0, 0, 0, 0], 
 [4, 0, 0, 0, 0, 0, 0, 0], 
-[5, 0, 0, 0, 0, 0, 0, 0], </code></pre>
+[5, 0, 0, 0, 0, 0, 0, 0], 
+[6, 0, 0, 0, 0, 0, 0, 0]</code></pre>
 
 <p>Dessa forma vamos relembrar do início do handout e as três ações possíveis:</p>
 
@@ -344,10 +339,10 @@ print(z)</code></pre>
 <p>Vamos criar uma nova função para resolver a matriz...</p>
 
 <pre class="prettybox"><code class="prettyprint">def resolve_matriz(matriz, x, y):
-    for k in range(1, len(x) + 1):
+    for k in range(1, len(y) + 1):
         # Percorrendo termo a termo
-        for i in range(1, len(y) + 1):
-            for j in range(1, len(x) + 1):
+        for i in range(1, len(x) + 1):
+            for j in range(1, len(y) + 1):
                 # A função min() retornará o menor dentre os valores dados como argumentos
                 matriz[i][j] = min(matriz[i-1][j-1] + checa_alinhamento(x, y, i-1, j-1), # Alinhar
                                     matriz[i-1][j] + 1, # Deletar
@@ -366,15 +361,16 @@ print(z)</code></pre>
 <p>É um código bem simples...</p>
 
 <pre class="prettybox"><code class="prettyprint">def checa_alinhamento(x, y, i, j):
-    if (y[i] != x[j]):
+    if (x[i] != y[j]):
         return 1
     else:
         return 0</code></pre>
 
 <p>Agora só é necessário rodar tudo e...</p>
 
-<pre class="prettybox"><code class="prettyprint">x = &quot;TGCCTAG&quot;
-y = &quot;TCCAGT&quot;
+<pre class="prettybox"><code class="prettyprint">x = &quot;TCCAGT&quot;
+y = &quot;TGCCTAG&quot;
+
 z = prepara_matriz(x, y)
 z = resolve_matriz(z, x, y)
 print(z)</code></pre>
@@ -393,7 +389,76 @@ print(z)</code></pre>
 
 <p>Mas o código não acaba por ai! Devemos ainda descobrir o caminho de ações realizadas para chegar no resultado...</p>
 
-<p>Vamos criar mais uma função que terá como saída este caminho.</p>
+<p>Vamos criar mais uma função que terá como saída este caminho, em sua respectiva ordem de alinhamento.</p>
+
+<p>Para poder traçar o caminho é simples: iremos fazer o caminho da resposta final, logo o ponto <em>matriz[len(x)][len(y)]</em>, até o 0 inicial, na posição matriz[0][0] e escolheremos sempre o menor valor dentre a diagonal ao valor atual, o valor que estiver acima do mesmo e o valor a sua esquerda.</p>
+
+<p>Além disso iremos utilizar de um conceito aprendido no início do semestre: recursão.</p>
+
+<p>Pense um pouco sobre como elaborar esta função e somente depois clique em continuar.</p>
+
+<h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
+
+<p>Não é de se esperar que o código nada mais é do que checar qual o mínimo dentre as 3 opções de caminho possíveis para cada posição e então dar um passo.</p>
+
+<pre class="prettybox"><code class="prettyprint">def alinhamento_final(matriz, m, n):
+    if (m == 0 or n == 0):
+        # base da recursão
+        return
+
+    # Faremos o mesmo cálculo feito na função resolve matriz
+    alinhar = matriz[m - 1][n - 1] + checa_alinhamento(x, y, m - 1, n - 1)
+    inserir = matriz[m][n-1] + 1
+    deletar = matriz[m-1][n] + 1
+
+    # Aqui vamos escolher a menor dentre as 3 opções de caminho
+    melhor_escolha = min(inserir, alinhar, deletar)
+
+    if (melhor_escolha == inserir):
+        # Adicionamos o caminho escolhido para a lista de soluções
+        solution.append(&#39;Inserir_&#39; + str(y[n - 1]))
+        # Então realizamos o passo para a direção andada
+        return alinhamento_final(matriz[:m+1][:n], m, n - 1)
+
+    elif (melhor_escolha == alinhar):
+        # Adicionamos o caminho escolhido para a lista de soluções
+        solution.append(&#39;Alinhar_&#39; + str(y[n - 1]))
+        # Então realizamos o passo para a direção andada
+        return alinhamento_final(matriz[:m][:n], m - 1, n - 1)
+
+    elif (melhor_escolha == deletar):
+        # Adicionamos o caminho escolhido para a lista de soluções
+        solution.append(&#39;Remover_&#39; + str(x[m - 1]))
+        # Então realizamos o passo para a direção andada
+        return alinhamento_final(matriz[:m][:n+1], m - 1, n)</code></pre>
+
+<p>Agora só precisamos criar uma variável global para ser nossa lista de soluções e chamar a função com a matriz resultante da função <em>resolve_matriz</em>.</p>
+
+<pre class="prettybox"><code class="prettyprint">x = &quot;TCCAGT&quot;
+y = &quot;TGCCTAG&quot;
+z = prepara_matriz(x, y)
+z = resolve_matriz(z, x, y)
+
+solution = []
+alinhamento_final(z, len(x), len(y))
+
+# Por fim podemos printar a lista de soluções ao contrário
+# pois fizemos o caminho inverso na função alinhamento_final
+for i in solution[::-1]:
+    print(i)</code></pre>
+
+<p>E assim obtemos a saída...</p>
+
+<pre class="nostalbox"><code class="nostalprint">Alinhar_T
+Inserir_G
+Alinhar_C
+Alinhar_C
+Inserir_T
+Alinhar_A
+Alinhar_G
+Remover_T</code></pre>
+
+<p>Exatamente o que havíamos previsto novamente quando simulamos na mão!!!</p>
 
 <h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
 
@@ -443,8 +508,8 @@ com as milhares que ele tem no PDB que é um Data Bank Mundial. E na página seg
 vai retornar todas as bases proteicas que foram comparadas com a sua e os percentuais de 
 similaridades.</p>
 
-<p>**Vale resaltar que o BLAST é uma das ferramentas que esta sendo utilizadas no combate ao COVID-19
-pois serve como forma de comparacão rápida dos diversos sequenciamentos geneticos ao redor do mundo.</p>
+<blockquote><p>Vale resaltar que o BLAST é uma das ferramentas que esta sendo utilizadas no combate ao COVID-19
+pois serve como forma de comparacão rápida dos diversos sequenciamentos geneticos ao redor do mundo.</p></blockquote>
 
 <h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
 
@@ -465,61 +530,7 @@ Needleman e Wunsch foram importantes para o desenvolvimento e aprimoramento da h
 o estado que vemos ela hoje. Trazendo a capacidade de transmitir e comparar em tempo real descobertas
 feitas ao redor do mundo.</p>
 
-<blockquote><p>rascunhos</p></blockquote>
-
-<p>Isto é texto normal. Para mudar de parágrafo, pule uma linha.</p>
-
-<p>Em texto normal, você pode usar <em>itálico</em>, <strong>negrito</strong>, <code class="prettybox prettyprint">código</code> e <code class="nostalbox nostalprint">comando</code>.
-Como você pode ver nesse exemplo, o modo de código é para ser usado em texto de
-código-fonte. Quando você tenta escrever texto normal, efeitos estranhos podem
-acontecer, como essa cor diferente no &quot;o&quot; com acento agudo.</p>
-
-<p>Você também pode usar \(\LaTeX\), se souber. Tanto no meio (\(\sum^n_{i=1}i\))
-de parágrafos, quanto em parágrafos próprios centralizados:</p>
-
-<p>\[\sum^n_{i=1}i.\]</p>
-
-<p>Adicionalmente, também pode criar</p>
-
-<ul><li><p>listas</p></li><li><p>não-ordenadas,</p></li></ul>
-
-<p>assim como</p>
-
-<ol><li><p>listas</p></li><li><p>ordenadas.</p></li></ol>
-
-<p>Finalmente, também pode criar</p>
-
-<pre class="prettybox"><code class="prettyprint">print(&#39;código em parágrafo destacado,&#39;)</code></pre>
-
-<p>assim como</p>
-
-<pre class="nostalbox"><code class="nostalprint">comando em parágrafo destacado.</code></pre>
-
-<p>Nesses dois casos, espaços em branco e quebras de linha serão respeitados.</p>
-
-<h2>Exemplo de subtítulo</h2>
-
-<p>A notação para criar <a href="https://www.insper.edu.br/" target="_blank">um link</a> é bem simples.</p>
-
-<p>A notação para criar</p>
-
-<p class="figure"><img alt="uma imagem" src="img/exemplo.png" title="uma imagem" class="raster"/></p>
-
-<p>é bem parecida. Espera-se que todas as imagens estejam na pasta <em>img</em>.</p>
-
-<p>A notação para criar</p>
-
-<blockquote><p>um aviso</p></blockquote>
-
-<p>é mais simples ainda.</p>
-
-<p>Para terminar, só falta mostrar como criar uma pausa.</p>
-
-<blockquote><p>Não continue sem vir validar no canal geral.</p></blockquote>
-
-<h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
-
-<p>That&#39;s all Folks!</p>
+<blockquote><p>Obrigado por ter acompanhado até aqui! =)</p></blockquote>
 
       </main>
       <footer>

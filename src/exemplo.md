@@ -1,16 +1,6 @@
 Algoritmo Needleman-Wunsch para alinhamento de sequências
 ==========================
 
-To do: (cada item é um break)
----
-
-* Explicar oq é (pra que serve)
-* Explicar a lógica
-* Implementação
-* Conclusão
-
->começo do handout
-
 Introdução
 ---
 
@@ -160,7 +150,7 @@ Ou seja..
 * Se escolhermos *b* iremos **alinhar** o caractére equivalente na horizontal
 * Se escolhermos *c* iremos **inserir** o caractére equivalente na horizontal
 
-Agora.. Qual escolher?? 
+Agora... Qual escolher?? 
 
 Tente deduzir qual seria o melhor.
 
@@ -297,8 +287,8 @@ preenchida com zeros.
 
 Considerando que temos os valores de *x* e *y*, podemos deduzir como ficaria o código a seguir:
 
-    x = "TGCCTAG"
-    y = "TCCAGT"
+    x = "TCCAGT"
+    y = "TGCCTAG"
     z = prepara_matriz(x, y)
 
     print(z)
@@ -335,11 +325,11 @@ Como a primeira linha e a primeira coluna devem ser preenchidas com uma contagem
 
         for l in range(1, len(x) + 1):
             # primeira linha
-            matriz[0][l] = l
+            matriz[l][0] = l
 
         for c in range(1, len(y) + 1):
             # primeira coluna
-            matriz[c][0] = c
+            matriz[0][c] = c
             
         return matriz
 
@@ -351,6 +341,8 @@ Assim, agora teremos a seguinte saída...
     [3, 0, 0, 0, 0, 0, 0, 0], 
     [4, 0, 0, 0, 0, 0, 0, 0], 
     [5, 0, 0, 0, 0, 0, 0, 0], 
+    [6, 0, 0, 0, 0, 0, 0, 0]
+
 Dessa forma vamos relembrar do início do handout e as três ações possíveis:
 
 * **Alinhar** um caractere de uma palavra na outra, sinônimo de copiar
@@ -360,10 +352,10 @@ Dessa forma vamos relembrar do início do handout e as três ações possíveis:
 Vamos criar uma nova função para resolver a matriz...
 
     def resolve_matriz(matriz, x, y):
-        for k in range(1, len(x) + 1):
+        for k in range(1, len(y) + 1):
             # Percorrendo termo a termo
-            for i in range(1, len(y) + 1):
-                for j in range(1, len(x) + 1):
+            for i in range(1, len(x) + 1):
+                for j in range(1, len(y) + 1):
                     # A função min() retornará o menor dentre os valores dados como argumentos
                     matriz[i][j] = min(matriz[i-1][j-1] + checa_alinhamento(x, y, i-1, j-1), # Alinhar
                                         matriz[i-1][j] + 1, # Deletar
@@ -382,15 +374,16 @@ Continue assim que pensar em uma forma de definir esta função.
 É um código bem simples...
 
     def checa_alinhamento(x, y, i, j):
-        if (y[i] != x[j]):
+        if (x[i] != y[j]):
             return 1
         else:
             return 0
 
 Agora só é necessário rodar tudo e...
 
-    x = "TGCCTAG"
-    y = "TCCAGT"
+    x = "TCCAGT"
+    y = "TGCCTAG"
+    
     z = prepara_matriz(x, y)
     z = resolve_matriz(z, x, y)
     print(z)
@@ -409,7 +402,76 @@ Exatamente o que tínhamos previsto quando simulamos o código na mão...
 
 Mas o código não acaba por ai! Devemos ainda descobrir o caminho de ações realizadas para chegar no resultado...
 
-Vamos criar mais uma função que terá como saída este caminho.
+Vamos criar mais uma função que terá como saída este caminho, em sua respectiva ordem de alinhamento.
+
+Para poder traçar o caminho é simples: iremos fazer o caminho da resposta final, logo o ponto *matriz[len(x)][len(y)]*, até o 0 inicial, na posição matriz[0][0] e escolheremos sempre o menor valor dentre a diagonal ao valor atual, o valor que estiver acima do mesmo e o valor a sua esquerda.
+
+Além disso iremos utilizar de um conceito aprendido no início do semestre: recursão.
+
+Pense um pouco sobre como elaborar esta função e somente depois clique em continuar.
+
+###
+
+Não é de se esperar que o código nada mais é do que checar qual o mínimo dentre as 3 opções de caminho possíveis para cada posição e então dar um passo.
+
+    def alinhamento_final(matriz, m, n):
+        if (m == 0 or n == 0):
+            # base da recursão
+            return
+
+        # Faremos o mesmo cálculo feito na função resolve matriz
+        alinhar = matriz[m - 1][n - 1] + checa_alinhamento(x, y, m - 1, n - 1)
+        inserir = matriz[m][n-1] + 1
+        deletar = matriz[m-1][n] + 1
+
+        # Aqui vamos escolher a menor dentre as 3 opções de caminho
+        melhor_escolha = min(inserir, alinhar, deletar)
+        
+        if (melhor_escolha == inserir):
+            # Adicionamos o caminho escolhido para a lista de soluções
+            solution.append('Inserir_' + str(y[n - 1]))
+            # Então realizamos o passo para a direção andada
+            return alinhamento_final(matriz[:m+1][:n], m, n - 1)
+
+        elif (melhor_escolha == alinhar):
+            # Adicionamos o caminho escolhido para a lista de soluções
+            solution.append('Alinhar_' + str(y[n - 1]))
+            # Então realizamos o passo para a direção andada
+            return alinhamento_final(matriz[:m][:n], m - 1, n - 1)
+
+        elif (melhor_escolha == deletar):
+            # Adicionamos o caminho escolhido para a lista de soluções
+            solution.append('Remover_' + str(x[m - 1]))
+            # Então realizamos o passo para a direção andada
+            return alinhamento_final(matriz[:m][:n+1], m - 1, n)
+
+Agora só precisamos criar uma variável global para ser nossa lista de soluções e chamar a função com a matriz resultante da função *resolve_matriz*.
+
+    x = "TCCAGT"
+    y = "TGCCTAG"
+    z = prepara_matriz(x, y)
+    z = resolve_matriz(z, x, y)
+
+    solution = []
+    alinhamento_final(z, len(x), len(y))
+    
+    # Por fim podemos printar a lista de soluções ao contrário
+    # pois fizemos o caminho inverso na função alinhamento_final
+    for i in solution[::-1]:
+        print(i)
+
+E assim obtemos a saída...
+
+    >Alinhar_T
+    Inserir_G
+    Alinhar_C
+    Alinhar_C
+    Inserir_T
+    Alinhar_A
+    Alinhar_G
+    Remover_T
+
+Exatamente o que havíamos previsto novamente quando simulamos na mão!!!
 
 ###
 
@@ -460,8 +522,8 @@ com as milhares que ele tem no PDB que é um Data Bank Mundial. E na página seg
 vai retornar todas as bases proteicas que foram comparadas com a sua e os percentuais de 
 similaridades.
 
-**Vale resaltar que o BLAST é uma das ferramentas que esta sendo utilizadas no combate ao COVID-19
-pois serve como forma de comparacão rápida dos diversos sequenciamentos geneticos ao redor do mundo.
+>Vale resaltar que o BLAST é uma das ferramentas que esta sendo utilizadas no combate ao COVID-19
+>pois serve como forma de comparacão rápida dos diversos sequenciamentos geneticos ao redor do mundo.
 
 ###
 
@@ -483,66 +545,4 @@ Needleman e Wunsch foram importantes para o desenvolvimento e aprimoramento da h
 o estado que vemos ela hoje. Trazendo a capacidade de transmitir e comparar em tempo real descobertas
 feitas ao redor do mundo.
 
-
-
->rascunhos
-
-Isto é texto normal. Para mudar de parágrafo, pule uma linha.
-
-Em texto normal, você pode usar *itálico*, **negrito**, `código` e `>comando`.
-Como você pode ver nesse exemplo, o modo de código é para ser usado em texto de
-código-fonte. Quando você tenta escrever texto normal, efeitos estranhos podem
-acontecer, como essa cor diferente no "o" com acento agudo.
-
-Você também pode usar $$\LaTeX$$, se souber. Tanto no meio ($$\sum^n_{i=1}i$$)
-de parágrafos, quanto em parágrafos próprios centralizados:
-
-$$$\sum^n_{i=1}i.$$$
-
-Adicionalmente, também pode criar
-
-* listas
-
-* não-ordenadas,
-
-assim como
-
-1. listas
-
-2. ordenadas.
-
-Finalmente, também pode criar
-
-    print('código em parágrafo destacado,')
-
-assim como
-
-    >comando em parágrafo destacado.
-
-Nesses dois casos, espaços em branco e quebras de linha serão respeitados.
-
-
-Exemplo de subtítulo
---------------------
-
-A notação para criar [um link](https://www.insper.edu.br/) é bem simples.
-
-A notação para criar
-
-![uma imagem](exemplo.png)
-
-é bem parecida. Espera-se que todas as imagens estejam na pasta *img*.
-
-A notação para criar
-
->um aviso
-
-é mais simples ainda.
-
-Para terminar, só falta mostrar como criar uma pausa.
-
->Não continue sem vir validar no canal geral.
-
-###
-
-That's all Folks!
+>Obrigado por ter acompanhado até aqui! =)
