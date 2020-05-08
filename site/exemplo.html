@@ -29,7 +29,7 @@
 
 <p>Com a recém descoberta do DNA, formado por cadeias de aminoácidos com bases
 nitrogenadas, Saul Needleman e Christian Wunsch, em 1969, foram atrás de 
-solucionar o problema de encontrar similaridades entre as estas, o que era
+solucionar o problema de encontrar similaridades entre estas, o que era
 uma necessidade para a área de estudo da genética.</p>
 
 <p>De forma geral, o algoritmo consiste em analisar duas palavras e verificar
@@ -46,6 +46,8 @@ nitrogenadas.</p>
 <pre class="nostalbox"><code class="nostalprint">  _COERENCIA
   OCORRENCIA</code></pre>
 
+<blockquote><p>Considere o &quot;_&quot; como um espaço vazio na palavra!</p></blockquote>
+
 <p>Desejamos que elas sejam iguais, para isso precisaremos realizar algumas mudanças.
 Manteremos a palavra &quot;<em>COERENCIA</em>&quot; como nosso padrão e alteraremos a palavra &quot;<em>OCORRENCIA</em>&quot;.</p>
 
@@ -56,7 +58,11 @@ Manteremos a palavra &quot;<em>COERENCIA</em>&quot; como nosso padrão e alterar
 <p>Também é importante saber que existem 3 ações possíveis que podemos realizar para
 alcançar nosso objetivo:</p>
 
-<ul><li><strong>Alinhar</strong> um caractere de uma palavra na outra, sinônimo de copiar</li><li><strong>Inserir</strong> um caractere novo em uma das palavras</li><li><strong>Deletar</strong> um caractere de uma das palavras.</li></ul>
+<ul><li><strong>Alinhar</strong> um caractere de uma palavra na outra, sinônimo de copiar</li><li><strong>Inserir</strong> um caractere novo em uma das palavras</li><li><strong>Remover</strong> um caractere de uma das palavras.</li></ul>
+
+<blockquote><p>Observação:</p><p>O alinhamento só conta efetivamente como &quot;ação&quot; se os caracteres forem <em>diferentes</em>. 
+Se forem iguais, Alinhar pode ser interpretado como &quot;pular uma ação&quot; já que os caracteres 
+estão devidamente <em>alinhados</em>. <strong>*(lembre-se disso, pois usaremos na lógica)</strong>*</p></blockquote>
 
 <p>Dessa forma podemos realizar pequenas e pontuais mudanças. Começaremos deletando o primeiro
 caractere de &quot;<em>OCORRENCIA</em>&quot;, pois como vemos em nossa base, ele não existe, assim temos:</p>
@@ -79,37 +85,387 @@ com o &quot;<em>E</em>&quot; de &quot;<em>COERENCIA</em>&quot;. Logo obtemos:</p
 
 <h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
 
-<h2>Lógica</h2>
+<h2>A Lógica do algoritmo</h2>
 
-<p>Este Algorítimo segue uma lógica em que iremos checar, por meio de uma matriz, 
-qual o numero de <em>alterações</em> que deve ser feita para tranformar a substring na 
-vertical na substring da horizontal</p>
+<p>Este Algoritmo segue uma lógica em que iremos checar, por meio de uma matriz, 
+qual o numero de <strong>ações</strong> que devemos realizar para transformar a substring na 
+vertical na substring da horizontal. </p>
+
+<p>Utilizamos a matriz para checar <em>TODAS</em> as <strong>ações</strong> para <em>TODAS</em> as substrings 
+possiveis.</p>
+
+<p>Vamos ver um exemplo de matriz com duas strings: <code class="prettybox prettyprint">&#39;TGCCTAG&#39;</code> e <code class="prettybox prettyprint">&#39;TCCAGT&#39;</code></p>
 
 <p class="figure"><img alt="tabela 1" src="img/tabela-1.png" title="tabela 1" class="raster"/></p>
 
 <p>Na tabela acima, podemos ver que cada casa da matriz representa quantas ações são 
 feitas para transformar a substring correspondente da vertical na da horizontal.</p>
 
-<p>Vamos agora tentar preencher essa tabela </p>
+<p>Vamos agora entender o preenchimento dessa tabela...</p>
+
+<p>Os dois primeiros <code class="prettybox prettyprint">&#39;-&#39;</code> antes de cada string representa... nada!! isso mesmo, nada.</p>
+
+<p>Tratamos esse primeiro espaço como a substrig <code class="prettybox prettyprint">&#39; &#39;</code> (vazia) e, antes de explicar algo, 
+você consegue deduzir quantas ações realizamos para tranformar <em>nada</em> em <em>nada</em>?</p>
+
+<h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
+
+<p>Para tranformar nada em nada faremos..... 0 ações!</p>
+
+<p>Começaremos nossa matriz com primeiro elemento 0.</p>
+
+<p class="figure"><img alt="tabela 2" src="img/tabela-2.png" title="tabela 2" class="raster"/></p>
+
+<p>O proximo passo é pensar, antes de qualquer coisa, na primeira linha e na primeira coluna.</p>
+
+<p>Ainda antes de explicar a <em>manha</em> do algoritmo, você consegue deduzir as casas da matriz da 
+primeira linha e coluna?</p>
+
+<blockquote><p>DICA: </p><p>A primeira linha representa quantas ações faremos para tranformar nada em <code>&#39;T&#39;</code>, <code>&#39;TG&#39;</code>, <code>&#39;TGC&#39;</code>, ...
+E podemos ver a coluna com os mesmos olhos.</p></blockquote>
+
+<h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
+
+<p>Na primeira linha, temos que <strong>Inserir</strong> (uma ação) cada caractere da string em nada. Podemos 
+então deduzir a primeira linha...</p>
+
+<p class="figure"><img alt="tabela 3" src="img/tabela-3.png" title="tabela 3" class="raster"/></p>
+
+<p>E assim, analogamente, faremos com a primeira coluna também.</p>
+
+<p class="figure"><img alt="tabela 4" src="img/tabela-4.png" title="tabela 4" class="raster"/></p>
+
+<p>Estamos com o terreno arado para ccomeçar, de verdade, a lógica do algorítimo!</p>
+
+<blockquote><p>Só avance se você entendeu as deduções de linhas e colunas...</p></blockquote>
+
+<h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
+
+<p>A <em>manha</em> do algorítimo é o seguinte:</p>
+
+<p class="figure"><img alt="ex" src="img/ex.png" title="ex" class="raster"/></p>
+
+<p>Iremos sempre olhar para um grupo de 4 casas e definir o valor da casa inferior direita (x) com 
+base nas outras.</p>
+
+<p>Em suma, x vai ser igual a algum dos valores a, b ou c acrescentando o custo de uma ação (1). 
+Portanto, x = a+1 ou b+1 ou c+1. </p>
+
+<p><em>Esta lembrado das ações que podemos realizar??</em></p>
+
+<ul><li>A escolha de <em>a</em> equivale a uma Remoção</li><li>A escolha de <em>b</em> equivale a um Alinhamento</li><li>A escolha de <em>c</em> equivale a uma Inserção</li></ul>
+
+<p>Ou seja..</p>
+
+<ul><li>Se escolhermos <em>a</em> iremos <strong>remover</strong> o caractére equivalente na horizontal</li><li>Se escolhermos <em>b</em> iremos <strong>alinhar</strong> o caractére equivalente na horizontal</li><li>Se escolhermos <em>c</em> iremos <strong>inserir</strong> o caractére equivalente na horizontal</li></ul>
+
+<p>Agora.. Qual escolher?? </p>
+
+<p>Tente deduzir qual seria o melhor.</p>
+
+<blockquote><p>DICA:</p><p>Tente lembrar do significado dos numeros das casas...</p></blockquote>
+
+<h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
+
+<p>Queremos seguir uma linha que representa o menor numero de ações que faremos não é mesmo? então o melhor 
+valor para se escolher é o <em>MENOR</em> valor</p>
+
+<p>Para ficar mais facil, vamos representar em <em>pseudo-código</em></p>
+
+<pre class="prettybox"><code class="prettyprint">var x = min(a, b, c) + 1</code></pre>
+
+<p>Mas ainda não acabou! temos mais um passo para ser feito... (lembra da observação acima?)</p>
+
+<p>Para que possamos adicionar uma ação (+1), teremos que, efetivamente, realizar uma ação, certo? Portanto, 
+no caso da escolha de <em>alinhamento</em>, antes de somar 1, devemos comparar os caractéres equivalentes e ver se são iguais! 
+Se não forem, não realizaremos nenhuma ação e o numero que somaremos não será um, mas sim 0!</p>
+
+<p>corrigindo o <em>pseudo-código</em> acima:</p>
+
+<pre class="prettybox"><code class="prettyprint">var x = min(a, b, c) + (if char1 != char2: 1, else: 0)</code></pre>
+
+<p>Vamos agora completar nossa tabela!</p>
+
+<p>Clique <a href="https://docs.google.com/document/d/1mMImN8eiCP9Jdz8oxio1HhodbmrJ53stkSBG6Xdfv1Y/edit?usp=sharing" target="_blank">aqui</a> para ter acesso a um <em>template</em> da tabela. Baixe-o para realizar a próxima parte.</p>
+
+<blockquote><p>Só continue se entendeu a lógica</p></blockquote>
+
+<h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
+
+<p>Vamos separar nosso preenchimento de cada casa em somente 2 passos:</p>
+
+<ol><li><p>Olhar para a vizinhança a, b e c (como explicado anteriormente) e escolher o menor valor</p></li><li><p>No caso de escolher <em>b</em>, checar os caractéres equivalentes e adicionar 1 se forem diferentes ou 0 se forem iguais </p></li></ol>
+
+<p>Vamos por em pratica a última parte que vimos voltando na matriz pronta para ser preenchida.</p>
+
+<p class="figure"><img alt="tabela 4" src="img/tabela-4.png" title="tabela 4" class="raster"/></p>
+
+<p>Neste caso, temos 1, 0 e 1 para escolhermos. Vamos escolher o menor (0) e, ja que os caractéres são iguais, adicionar 0.</p>
+
+<p class="figure"><img alt="tabela 5" src="img/tabela-5.png" title="tabela 5" class="raster"/></p>
+
+<p>Essa proxima linha interia pode ser deduzida rapidamente pois queremos adicionar as substrings somente em <code class="prettybox prettyprint">&#39;T&#39;</code></p>
+
+<p class="figure"><img alt="tabela 6" src="img/tabela-6.png" title="tabela 6" class="raster"/></p>
+
+<p>Continuando, temos agora 2, 1, e 0 sendo que o valor escolido foi <em>c</em>. Portanto apenas somamos 1</p>
+
+<p class="figure"><img alt="tabela 7" src="img/tabela-7.png" title="tabela 7" class="raster"/></p>
+
+<p>Aqui temos um caso parecido com o inicial, mas dessa vez com caractéres diferentes. Portanto, somamos 1</p>
+
+<p class="figure"><img alt="tabela 8" src="img/tabela-8.png" title="tabela 8" class="raster"/></p>
+
+<p>Agora temos um caso de impate! oque faremos agora... </p>
+
+<p>Basta escolher o que nos resultará em um menor número! Neste caso, temos 1 e 1 no valor a e b com caracteres <em>iguais</em>. 
+Portanto, o melhor a ser escolido é <em>b</em> porque não somaremos 1 no final</p>
+
+<p class="figure"><img alt="tabela 9" src="img/tabela-9.png" title="tabela 9" class="raster"/></p>
+
+<p>Agora é sua vez! Tente completar a tabela.</p>
+
+<blockquote><p>Não continue sem esclarecer suas dúvidas</p></blockquote>
+
+<h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
+
+<p>Se tudo deu certo, você chegou em uma tabela igual (ou pelomenos parecida) com essa:</p>
+
+<p class="figure"><img alt="tabela 0" src="img/tabela-0.png" title="tabela 0" class="raster"/></p>
+
+<p>Com ela preenchida, se repararmos no ultimo valor da matriz...</p>
+
+<p class="figure"><img alt="tabela 11" src="img/tabela-11.png" title="tabela 11" class="raster"/></p>
+
+<p>... ele representa o numero de ações que tomamos para transformar toda a string da horizontal na string da vertical!</p>
+
+<p>Só nos resta uma coisa! Saber quais foram as ações e onde elas ocorreram.</p>
+
+<p>Para isso, vamos desenhar uma linha guia começando do ultimo elemento e ligando o menor numero subsequente da casa atual. Em suma, estamos apontando para a origem da casa atual e traçando o caminho pelo qual foi percorrido para chegar no resultado.</p>
+
+<p class="figure"><img alt="tabela 12" src="img/tabela-12.png" title="tabela 12" class="raster"/></p>
+
+<p>Agora... Está lembrando da representação de cada movimento das ações? Volte nas listas da <em>manha</em> do algoítmo caso não lembre..</p>
+
+<h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
+
+<p>Lemos essa linha do primeiro ítem da matriz para o último (sentido contrário do qual desenhamos) e seguimos as representações de cada movimento.</p>
+
+<h2>Concluindo:</h2>
+
+<p>Na string <code class="prettybox prettyprint">&#39;TCCAGT&#39;</code> nós:</p>
+
+<ul><li>Alinhamos T -&gt; <code class="prettybox prettyprint">&#39;TCCAGT&#39;</code> (continua igual em alinhamentos com caracteres iguais)</li><li>Inserimos G -&gt; <code class="prettybox prettyprint">&#39;TGCCAGT&#39;</code></li><li>Alinhamos C -&gt; <code class="prettybox prettyprint">&#39;TGCCAGT&#39;</code></li><li>Alinhamos C -&gt; <code class="prettybox prettyprint">&#39;TGCCAGT&#39;</code> </li><li>Inserimos T -&gt; <code class="prettybox prettyprint">&#39;TGCCTAGT&#39;</code> </li><li>Alinhamos A -&gt; <code class="prettybox prettyprint">&#39;TGCCTAGT&#39;</code> </li><li>Alinhamos G -&gt; <code class="prettybox prettyprint">&#39;TGCCTAGT&#39;</code></li><li>Removemos T -&gt; <code class="prettybox prettyprint">&#39;TGCCTAG&#39;</code> </li></ul>
+
+<p>Transformamos a string <code class="prettybox prettyprint">&#39;TCCAGT&#39;</code> em <code class="prettybox prettyprint">&#39;TGCCTAG&#39;</code> </p>
+
+<p>Que tal fazermos isso em código agora!</p>
+
+<h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
+
+<h2>Vamos implementar!</h2>
+
+<p>Agora que já entendemos a lógica do funcionamento, vamos implementar isto em uma
+ferramenta muito conhecido por todos nós: o <em>Python</em>!</p>
+
+<p>Para começar vamos criar uma função que recebe duas strings <em>x</em> e <em>y</em> e prepara a matriz inicial,
+preenchida com zeros.</p>
+
+<pre class="prettybox"><code class="prettyprint">def prepara_matriz(x, y):
+    matriz = []
+    for i in range(len(x) + 1):
+        linha = []
+        for j in range(len(y) + 1):
+            linha.append(0)
+        matriz.append(linha)
+    return matriz</code></pre>
+
+<p>Considerando que temos os valores de <em>x</em> e <em>y</em>, podemos deduzir como ficaria o código a seguir:</p>
+
+<pre class="prettybox"><code class="prettyprint">x = &quot;TGCCTAG&quot;
+y = &quot;TCCAGT&quot;
+z = prepara_matriz(x, y)
+
+print(z)</code></pre>
+
+<h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
+
+<p>A saída seria:</p>
+
+<pre class="nostalbox"><code class="nostalprint">[[0, 0, 0, 0, 0, 0, 0, 0], 
+[0, 0, 0, 0, 0, 0, 0, 0], 
+[0, 0, 0, 0, 0, 0, 0, 0], 
+[0, 0, 0, 0, 0, 0, 0, 0], 
+[0, 0, 0, 0, 0, 0, 0, 0], 
+[0, 0, 0, 0, 0, 0, 0, 0], 
+[0, 0, 0, 0, 0, 0, 0, 0]]</code></pre>
+
+<blockquote><p>OBSERVAÇÃO: Podemos escrever esse código todo em apenas uma linha, mas esse não é o foco do handout.</p></blockquote>
+
+<pre class="prettybox"><code class="prettyprint">def prepara_matriz(x, y):
+    matriz = [[0 for i in range(len(x) + 1)] for j in range(len(y) + 1)]
+    return matriz</code></pre>
+
+<p>Com isso seguimos para a segunda etapa que, assim como na explicação da lógica do algoritmo feita neste mesmo handout, iremos preencher a primeira linha e primeira coluna da nossa matriz.</p>
+
+<p>Como a primeira linha e a primeira coluna devem ser preenchidas com uma contagem dos valores, logo podemos melhorar nossa função <em>prepara_matriz</em>!</p>
+
+<pre class="prettybox"><code class="prettyprint">def prepara_matriz(x, y):
+    matriz = []
+    for i in range(len(y) + 1):
+        linha = []
+        for j in range(len(x) + 1):
+            linha.append(0)
+        matriz.append(linha)
+
+    for l in range(1, len(x) + 1):
+        # primeira linha
+        matriz[0][l] = l
+
+    for c in range(1, len(y) + 1):
+        # primeira coluna
+        matriz[c][0] = c
+
+    return matriz</code></pre>
+
+<p>Assim, agora teremos a seguinte saída...</p>
+
+<pre class="nostalbox"><code class="nostalprint">[[0, 1, 2, 3, 4, 5, 6, 7], 
+[1, 0, 0, 0, 0, 0, 0, 0], 
+[2, 0, 0, 0, 0, 0, 0, 0], 
+[3, 0, 0, 0, 0, 0, 0, 0], 
+[4, 0, 0, 0, 0, 0, 0, 0], 
+[5, 0, 0, 0, 0, 0, 0, 0], </code></pre>
+
+<p>Dessa forma vamos relembrar do início do handout e as três ações possíveis:</p>
+
+<ul><li><strong>Alinhar</strong> um caractere de uma palavra na outra, sinônimo de copiar</li><li><strong>Inserir</strong> um caractere novo em uma das palavras</li><li><strong>Remover</strong> um caractere de uma das palavras.</li></ul>
+
+<p>Vamos criar uma nova função para resolver a matriz...</p>
+
+<pre class="prettybox"><code class="prettyprint">def resolve_matriz(matriz, x, y):
+    for k in range(1, len(x) + 1):
+        # Percorrendo termo a termo
+        for i in range(1, len(y) + 1):
+            for j in range(1, len(x) + 1):
+                # A função min() retornará o menor dentre os valores dados como argumentos
+                matriz[i][j] = min(matriz[i-1][j-1] + checa_alinhamento(x, y, i-1, j-1), # Alinhar
+                                    matriz[i-1][j] + 1, # Deletar
+                                    matriz[i][j-1] + 1) # Inserir
+
+    return matriz</code></pre>
+
+<p>Porém ao ler este recorte de código, você deve ter percebido que não declaramos nenhuma função <em>&quot;checa_alinhamento&quot;</em> e... você está certo... por isso vamos ao trabalho!</p>
+
+<p>Sabemos que a função <em>&quot;checa_alinhamento&quot;</em> irá comparar dois termos e retornará 1 para caso seja necessário um alinhamento, logo uma cópia do que chamamos aqui de <em>&quot;valor base&quot;</em> e 0 caso contrário.</p>
+
+<p>Continue assim que pensar em uma forma de definir esta função.</p>
+
+<h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
+
+<p>É um código bem simples...</p>
+
+<pre class="prettybox"><code class="prettyprint">def checa_alinhamento(x, y, i, j):
+    if (y[i] != x[j]):
+        return 1
+    else:
+        return 0</code></pre>
+
+<p>Agora só é necessário rodar tudo e...</p>
+
+<pre class="prettybox"><code class="prettyprint">x = &quot;TGCCTAG&quot;
+y = &quot;TCCAGT&quot;
+z = prepara_matriz(x, y)
+z = resolve_matriz(z, x, y)
+print(z)</code></pre>
+
+<p>...<em>voilà</em>... temos a seguinte saída...</p>
+
+<pre class="nostalbox"><code class="nostalprint">[[0, 1, 2, 3, 4, 5, 6, 7], 
+[1, 0, 1, 2, 3, 4, 5, 6], 
+[2, 1, 1, 1, 2, 3, 4, 5], 
+[3, 2, 2, 1, 1, 2, 3, 4], 
+[4, 3, 3, 2, 2, 2, 2, 3], 
+[5, 4, 3, 3, 3, 3, 3, 2], 
+[6, 5, 4, 4, 4, 3, 4, 3]]</code></pre>
+
+<p>Exatamente o que tínhamos previsto quando simulamos o código na mão...</p>
+
+<p>Mas o código não acaba por ai! Devemos ainda descobrir o caminho de ações realizadas para chegar no resultado...</p>
+
+<p>Vamos criar mais uma função que terá como saída este caminho.</p>
+
+<h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
+
+<h2>Utilização na biotecnologia</h2>
+
+<p>Com o passar dos anos, cada vez mais, o algoritmo de Needleman e Wunsch foi sendo 
+reconhecido como ferramenta fundamental para a análise de proteínas no desenvolvimento 
+e sintetização de vacinas para o combate de doenças.</p>
+
+<p>É graças ao que esses caras desenvolveram nessa época que conseguimos hoje ter 
+acesso de forma fácil e simples a ferramentas complexas de análise genética só que
+do conforto de casa.</p>
+
+<p>Um exemplo dessas ferramentas é o <a href="https://blast.ncbi.nlm.nih.gov/Blast.cgi" target="_blank">Blast</a>.</p>
+
+<p>Chegando no site, você vai se deparar com essa imagem. Clique no botão que a &quot;setinha&quot; aponta.</p>
+
+<p class="figure"><img alt="Clique em Protein Blast" src="img/blast-3.jpg" title="Clique em Protein Blast" class="raster"/></p>
+
+<p>Na página seguinte, insira nessa caixa de texto maiorzinha o seguinte código proteico.</p>
+
+<p class="figure"><img alt="Enter accession number(s), gi(s), or FASTA sequence(s)" src="img/blast-1.png" title="Enter accession number(s), gi(s), or FASTA sequence(s)" class="raster"/></p>
+
+<pre class="prettybox"><code class="prettyprint">BETA-GALACTOSIDASE|BIFIDOBACTERIUM BIFIDUM S17 (883062)
+MSKRRKHSWPQPLKGAESRLWYGGDYNPDQWPEEVWDDDIRLMKKAGVNLVSVGIFSWAKIEPEEGKYDFDWLDRA
+IDKLGKAGIAVDLASATASPPMWLTQAHPEVLWKDERGDTVWPGAREHWRPTSPVFREYALNLCRRMAEHYKGNPY
+VVAWHVSNEYGCHNRFDYSDDAMRAFQKWCKKRYKTIDAVNEAWGTAFWAQHMNDFSEIIPPRYIGDGNFMNPGKL
+LDYKRFSSDALKELYIAERDVLESITPGLPLTTNFMVSAGGSMLDYDDWGAEVDFVSNDHYFTPGEAHFDEVAYAA
+SLMDGISRKEPWFQMEHSTSAVNWRPINYRAEPGSVVRDSLAQVAMGADAICYFQWRQSKAGAEKWHSSMVPHAGE
+DSQIFRDVCELGADLGRLSDEGLMGTKTVKSKVAVVFDYESQWATEYTANPTQQVDHWTEPLDWFRALADNGITAD
+VVPVRSDWDSYEIAVLPCVYLLSEETSRRVREFVANGGKLFVTYYTGLSDENDHIWLGGYPGSIRDVVGVRVEEFA
+PMGNDMPGALDHLDLDNGTVAHDFADVITSTADTSTVLASYKAERWTGMNEVPAIVANGYGDGRTVYVGCRLGRQG
+LAKSLPAMLGSMGLSDLAGDGRVLRVERADAAAASHFEFVFNRTHEPVTVDVEGEAIAASLAHVDDGRATIDPTGV
+VVLRR</code></pre>
+
+<p>Na mesma página, você terá que selecionar o set de busca que deseja no dropdown indicado na imagem
+a seguir.</p>
+
+<p class="figure"><img alt="Database" src="img/blast-2.png" title="Database" class="raster"/></p>
+
+<p>Selecione a opção Protein Data Bank proteins(PDB)</p>
+
+<p>Em seguida clica em BLAST no fim da página.</p>
+
+<p>O programa vai rodar o algoritmo apresentado comparando a sequencia proteica que eu lhe forneci
+com as milhares que ele tem no PDB que é um Data Bank Mundial. E na página seguinte no fim dela ele 
+vai retornar todas as bases proteicas que foram comparadas com a sua e os percentuais de 
+similaridades.</p>
+
+<p>**Vale resaltar que o BLAST é uma das ferramentas que esta sendo utilizadas no combate ao COVID-19
+pois serve como forma de comparacão rápida dos diversos sequenciamentos geneticos ao redor do mundo.</p>
+
+<h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
+
+<h2>Conclusão</h2>
+
+<p>Nesse handout trabalhamos um algorítimo sequencial que se mostrou importante para muito do que se tem
+desenvolvido na genetica. Em resumo sua implementação consiste em ter duas strings para comparacão
+e fazer o uso das tecnicas de construção da matrix que ensinamos para achar a quantidade de modificações
+necessárias para transformar uma string na outra, em seguida usamos as ações especiais pra deixar as
+strings iguais.</p>
+
+<p>Vimos também durante o handout como fazer a implementação desse algoritmo em Python. Usamos funções para
+preparar a matriz pra resolver checando alinhamento dos caracteres e deletando ou inserindo caso
+fosse necessário.</p>
+
+<p>E em seguida foi mostrado uma aplicação real que retrata o quando essas operações criadas por 
+Needleman e Wunsch foram importantes para o desenvolvimento e aprimoramento da humanidade até 
+o estado que vemos ela hoje. Trazendo a capacidade de transmitir e comparar em tempo real descobertas
+feitas ao redor do mundo.</p>
 
 <blockquote><p>rascunhos</p></blockquote>
-
-<p>agora vai</p>
-
-<pre class="prettybox"><code class="prettyprint">print(&#39;Fala hélio&#39;)</code></pre>
-
-<p>| Tables   |      Are      |  Cool |
-|----------|:-------------:|------:|
-| col 1 is |  left-aligned | $1600 |
-| col 2 is |    centered   |   $12 |
-| col 3 is | right-aligned |    $1 |</p>
-
-<p>aaa
-| titulo  | 2 titulo  |
-|---------|-----------|
-| valor   |  valor 2  |</p>
-
-<p>aaaaa</p>
 
 <p>Isto é texto normal. Para mudar de parágrafo, pule uma linha.</p>
 
