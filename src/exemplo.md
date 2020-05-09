@@ -496,7 +496,7 @@ Na página seguinte, insira nessa caixa de texto maiorzinha o seguinte código p
 
 ![Enter accession number(s), gi(s), or FASTA sequence(s)](blast-1.png)
 
-    BETA-GALACTOSIDASE|BIFIDOBACTERIUM BIFIDUM S17 (883062)
+BETA-GALACTOSIDASE|BIFIDOBACTERIUM BIFIDUM S17 (883062)
     MSKRRKHSWPQPLKGAESRLWYGGDYNPDQWPEEVWDDDIRLMKKAGVNLVSVGIFSWAKIEPEEGKYDFDWLDRA
     IDKLGKAGIAVDLASATASPPMWLTQAHPEVLWKDERGDTVWPGAREHWRPTSPVFREYALNLCRRMAEHYKGNPY
     VVAWHVSNEYGCHNRFDYSDDAMRAFQKWCKKRYKTIDAVNEAWGTAFWAQHMNDFSEIIPPRYIGDGNFMNPGKL
@@ -527,7 +527,7 @@ similaridades.
 
 ###
 
-Conclusão
+Análise da complexidade do algorítimo e conclução
 ---
 
 Nesse handout trabalhamos um algorítimo sequencial que se mostrou importante para muito do que se tem
@@ -540,9 +540,36 @@ Vimos também durante o handout como fazer a implementação desse algoritmo em 
 preparar a matriz pra resolver checando alinhamento dos caracteres e deletando ou inserindo caso
 fosse necessário.
 
-E em seguida foi mostrado uma aplicação real que retrata o quando essas operações criadas por 
-Needleman e Wunsch foram importantes para o desenvolvimento e aprimoramento da humanidade até 
+Mas acho que falo por vocês quando digo: 
+    "Beleza, mas qual a verdadeira complexidade disso?"
+
+Você consegue pensar na complexidade gerada pelo algoritmo só observando o código que você criou?
+
+>De um pausa de 2 min e discuta com seus colegas de mesa sobre isso
+
+###
+
+Se formos calcular puramente essa complexidade facilmente você consegue deduzir que ela é feita através
+da multiplicação de duas matrizes com n colunas e uma linha. O que nos entrega uma uma complexidade n^2. Porém esse é um 
+dos casos que conseguimos reduzir o número de operações através do uso do método dos 4 Russos. 
+
+Um favor que eu peço é pra que você não abra o link agora, se não você vai me odiar e não é isso que queremos. 
+Por isso eu vou resumir pra você. Mas se após o Handout você ficar mais curioso para conhecer melhor esse método, 
+dai pra frente é sua conta em risco.
+
+[4 Russos](https://www.youtube.com/watch?v=cYJrMUvJQGc).
+
+Esse método leva em consideração que operações ja feitos e exatamente iguais não precisam ser repetidos pois ja sabemos 
+o resultado delas, só nos basta substituir. Esse simples conceito já é capaz de reduzir nossa complexidade de n^2 para nm
+sendo m um número menor que n o que em termos de processamento já ajuda bastante.
+
+Apesar de ser um algoritimo primordial por ser muito utilizado quando se quer um excelente alinhamento global para o 
+desenvolvimento da Bioinformática, era de se esperar que com o passar dos anos ele fosse desbancado pro outros como um
+uso melhor do tempo de processamento, assim como é feito no Fast Optimal Global Sequence Alignment Algorithm(FOGSAA)
+
+Porém, todo esse revés no tmpo de execução  não impede em nenhum momento o uso em uma aplicação real que retrata o 
+quanto essas operações criadas por Needleman e Wunsch foram importantes para o desenvolvimento e aprimoramento da humanidade até 
 o estado que vemos ela hoje. Trazendo a capacidade de transmitir e comparar em tempo real descobertas
-feitas ao redor do mundo.
+feitas ao redor do mundo de forma eficiente e prática.
 
 >Obrigado por ter acompanhado até aqui! =)
