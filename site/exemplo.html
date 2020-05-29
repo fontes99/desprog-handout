@@ -180,7 +180,7 @@ Se não forem, não realizaremos nenhuma ação e o numero que somaremos não se
 
 <p>Vamos agora completar nossa tabela!</p>
 
-<p>Clique <a href="https://docs.google.com/document/d/1mMImN8eiCP9Jdz8oxio1HhodbmrJ53stkSBG6Xdfv1Y/edit?usp=sharing" target="_blank">aqui</a> para ter acesso a um <em>template</em> da tabela. Baixe-o para realizar a próxima parte.</p>
+<p>Clique <a href="https://docs.google.com/document/d/1mMImN8eiCP9Jdz8oxio1HhodbmrJ53stkSBG6Xdfv1Y/edit?usp=sharing" target="_blank">aqui</a> para ter acesso a um <em>template</em> da tabela. Baixe-o (ou faça uma cópia em &quot;Arquivo&quot; no canto superior esquerdo) para realizar a próxima parte.</p>
 
 <blockquote><p>Só continue se entendeu a lógica</p></blockquote>
 
@@ -251,7 +251,27 @@ Portanto, o melhor a ser escolido é <em>b</em> porque não somaremos 1 no final
 
 <ul><li>Alinhamos T -&gt; <code class="prettybox prettyprint">&#39;TCCAGT&#39;</code> (continua igual em alinhamentos com caracteres iguais)</li><li>Inserimos G -&gt; <code class="prettybox prettyprint">&#39;TGCCAGT&#39;</code></li><li>Alinhamos C -&gt; <code class="prettybox prettyprint">&#39;TGCCAGT&#39;</code></li><li>Alinhamos C -&gt; <code class="prettybox prettyprint">&#39;TGCCAGT&#39;</code> </li><li>Inserimos T -&gt; <code class="prettybox prettyprint">&#39;TGCCTAGT&#39;</code> </li><li>Alinhamos A -&gt; <code class="prettybox prettyprint">&#39;TGCCTAGT&#39;</code> </li><li>Alinhamos G -&gt; <code class="prettybox prettyprint">&#39;TGCCTAGT&#39;</code></li><li>Removemos T -&gt; <code class="prettybox prettyprint">&#39;TGCCTAG&#39;</code> </li></ul>
 
-<p>Transformamos a string <code class="prettybox prettyprint">&#39;TCCAGT&#39;</code> em <code class="prettybox prettyprint">&#39;TGCCTAG&#39;</code> </p>
+<p>Transformamos a string <code class="prettybox prettyprint">&#39;TCCAGT&#39;</code> em <code class="prettybox prettyprint">&#39;TGCCTAG&#39;</code></p>
+
+<p>Agora é com você! Abra a <a href="https://docs.google.com/document/d/1JDX5QX84NwbD50oPLMp6Nfql1hNU1o5R30aBSc74IuU/edit?usp=sharing" target="_blank">Tabela 2</a>, faça outro download ou cópia e tente completa-la com oque aprendeu.</p>
+
+<p class="figure"><img alt="tabela New" src="img/tabela-new.png" title="tabela New" class="raster"/></p>
+
+<blockquote><p>Qualquer dúvida é só chamar! mas antes, tente voltar nas explicações.</p></blockquote>
+
+<h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
+
+<p>Se tudo der certo... você chegou em uma tabela com (mais ou menos) essa cara:</p>
+
+<p class="figure"><img alt="tabela Resultado" src="img/tabela-resultado.png" title="tabela Resultado" class="raster"/></p>
+
+<p>Agora tente traçar a linha referente aos passos dados.</p>
+
+<h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
+
+<p>Algo parecido? Se sim, show! acabamos a teoria. Sinta-se encorajado a tirar qualquer dúvida ainda existente</p>
+
+<p class="figure"><img alt="tabela linha" src="img/tabela-linha.png" title="tabela linha" class="raster"/></p>
 
 <p>Que tal fazermos isso em código agora!</p>
 
@@ -513,7 +533,7 @@ pois serve como forma de comparacão rápida dos diversos sequenciamentos geneti
 
 <h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
 
-<h2>Conclusão</h2>
+<h2>Análise da complexidade do algorítimo e conclução</h2>
 
 <p>Nesse handout trabalhamos um algorítimo sequencial que se mostrou importante para muito do que se tem
 desenvolvido na genetica. Em resumo sua implementação consiste em ter duas strings para comparacão
@@ -525,10 +545,36 @@ strings iguais.</p>
 preparar a matriz pra resolver checando alinhamento dos caracteres e deletando ou inserindo caso
 fosse necessário.</p>
 
-<p>E em seguida foi mostrado uma aplicação real que retrata o quando essas operações criadas por 
-Needleman e Wunsch foram importantes para o desenvolvimento e aprimoramento da humanidade até 
+<p>Mas acho que falo por vocês quando digo: 
+    &quot;Beleza, mas qual a verdadeira complexidade disso?&quot;</p>
+
+<p>Você consegue pensar na complexidade gerada pelo algoritmo só observando o código que você criou?</p>
+
+<blockquote><p>De um pausa de 2 min e discuta com seus colegas de mesa sobre isso</p></blockquote>
+
+<h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
+
+<p>Se formos calcular puramente essa complexidade facilmente você consegue deduzir que ela é feita através
+da multiplicação de duas matrizes com n colunas e uma linha. O que nos entrega uma uma complexidade n^2. Porém esse é um 
+dos casos que conseguimos reduzir o número de operações através do uso do método dos 4 Russos. </p>
+
+<p>Um favor que eu peço é pra que você não abra o link agora, se não você vai me odiar e não é isso que queremos. 
+Por isso eu vou resumir pra você. Mas se após o Handout você ficar mais curioso para conhecer melhor esse método, 
+dai pra frente é sua conta em risco.</p>
+
+<h2>Método 4 russos</h2>
+
+<p>Esse <a href="https://www.youtube.com/watch?v=cYJrMUvJQGc" target="_blank">método</a> leva em consideração que operações ja feitos e exatamente iguais não precisam ser repetidos pois ja sabemos 
+o resultado delas, só nos basta substituir. Esse simples conceito já é capaz de reduzir nossa complexidade de \(n^2\) para nm, sendo m um número menor que n o que em termos de processamento já ajuda bastante.</p>
+
+<p>Apesar de ser um algoritimo primordial por ser muito utilizado quando se quer um excelente alinhamento global para o 
+desenvolvimento da Bioinformática, era de se esperar que com o passar dos anos ele fosse desbancado pro outros como um
+uso melhor do tempo de processamento, assim como é feito no Fast Optimal Global Sequence Alignment Algorithmb (FOGSAA).</p>
+
+<p>Porém, todo esse revés no tempo de execução não impede em nenhum momento o uso em uma aplicação real que retrata o 
+quanto essas operações criadas por Needleman e Wunsch foram importantes para o desenvolvimento e aprimoramento da humanidade até 
 o estado que vemos ela hoje. Trazendo a capacidade de transmitir e comparar em tempo real descobertas
-feitas ao redor do mundo.</p>
+feitas ao redor do mundo de forma eficiente e prática.</p>
 
 <blockquote><p>Obrigado por ter acompanhado até aqui! =)</p></blockquote>
 

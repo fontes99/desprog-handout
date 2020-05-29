@@ -14,7 +14,7 @@ def alinhamento_final(matriz, m, n):
     deletar = matriz[m-1][n] + 1
 
     melhor_escolha = min(inserir, alinhar, deletar)
-    print(m, n)
+    # print(m, n)
     if (melhor_escolha == inserir):
         # print("n-1 -> inserir")
         solution.append('Inserir_' + str(y[n - 1]))
@@ -70,6 +70,9 @@ if __name__ == "__main__":
     y = "TGCCTAG"
     z = prepara_matriz(x, y)
     z = resolve_matriz(z, x, y)
+
+    for i in z:
+        print(i)
 
     solution = []
     alinhamento_final(z, len(x), len(y))

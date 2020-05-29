@@ -180,7 +180,7 @@ corrigindo o *pseudo-código* acima:
 
 Vamos agora completar nossa tabela!
 
-Clique [aqui](https://docs.google.com/document/d/1mMImN8eiCP9Jdz8oxio1HhodbmrJ53stkSBG6Xdfv1Y/edit?usp=sharing) para ter acesso a um *template* da tabela. Baixe-o para realizar a próxima parte.
+Clique [aqui](https://docs.google.com/document/d/1mMImN8eiCP9Jdz8oxio1HhodbmrJ53stkSBG6Xdfv1Y/edit?usp=sharing) para ter acesso a um *template* da tabela. Baixe-o (ou faça uma cópia em "Arquivo" no canto superior esquerdo) para realizar a próxima parte.
 
 >Só continue se entendeu a lógica
 
@@ -261,7 +261,28 @@ Na string `'TCCAGT'` nós:
 * Alinhamos G -> `'TGCCTAGT'`
 * Removemos T -> `'TGCCTAG'` 
  
-Transformamos a string `'TCCAGT'` em `'TGCCTAG'` 
+Transformamos a string `'TCCAGT'` em `'TGCCTAG'`
+
+Agora é com você! Abra a [Tabela 2](https://docs.google.com/document/d/1JDX5QX84NwbD50oPLMp6Nfql1hNU1o5R30aBSc74IuU/edit?usp=sharing), faça outro download ou cópia e tente completa-la com oque aprendeu.
+
+![tabela New](tabela-new.png)
+
+>Qualquer dúvida é só chamar! mas antes, tente voltar nas explicações.
+
+
+###
+
+Se tudo der certo... você chegou em uma tabela com (mais ou menos) essa cara:
+
+![tabela Resultado](tabela-resultado.png)
+
+Agora tente traçar a linha referente aos passos dados.
+###
+
+Algo parecido? Se sim, show! acabamos a teoria. Sinta-se encorajado a tirar qualquer dúvida ainda existente
+
+![tabela linha](tabela-linha.png)
+
 
 Que tal fazermos isso em código agora!
 
@@ -496,7 +517,7 @@ Na página seguinte, insira nessa caixa de texto maiorzinha o seguinte código p
 
 ![Enter accession number(s), gi(s), or FASTA sequence(s)](blast-1.png)
 
-BETA-GALACTOSIDASE|BIFIDOBACTERIUM BIFIDUM S17 (883062)
+    BETA-GALACTOSIDASE|BIFIDOBACTERIUM BIFIDUM S17 (883062)
     MSKRRKHSWPQPLKGAESRLWYGGDYNPDQWPEEVWDDDIRLMKKAGVNLVSVGIFSWAKIEPEEGKYDFDWLDRA
     IDKLGKAGIAVDLASATASPPMWLTQAHPEVLWKDERGDTVWPGAREHWRPTSPVFREYALNLCRRMAEHYKGNPY
     VVAWHVSNEYGCHNRFDYSDDAMRAFQKWCKKRYKTIDAVNEAWGTAFWAQHMNDFSEIIPPRYIGDGNFMNPGKL
@@ -557,17 +578,17 @@ Um favor que eu peço é pra que você não abra o link agora, se não você vai
 Por isso eu vou resumir pra você. Mas se após o Handout você ficar mais curioso para conhecer melhor esse método, 
 dai pra frente é sua conta em risco.
 
-[4 Russos](https://www.youtube.com/watch?v=cYJrMUvJQGc).
+Método 4 russos
+---
 
-Esse método leva em consideração que operações ja feitos e exatamente iguais não precisam ser repetidos pois ja sabemos 
-o resultado delas, só nos basta substituir. Esse simples conceito já é capaz de reduzir nossa complexidade de n^2 para nm
-sendo m um número menor que n o que em termos de processamento já ajuda bastante.
+Esse [método](https://www.youtube.com/watch?v=cYJrMUvJQGc) leva em consideração que operações ja feitos e exatamente iguais não precisam ser repetidos pois ja sabemos 
+o resultado delas, só nos basta substituir. Esse simples conceito já é capaz de reduzir nossa complexidade de $$n^2$$ para nm, sendo m um número menor que n o que em termos de processamento já ajuda bastante.
 
 Apesar de ser um algoritimo primordial por ser muito utilizado quando se quer um excelente alinhamento global para o 
 desenvolvimento da Bioinformática, era de se esperar que com o passar dos anos ele fosse desbancado pro outros como um
-uso melhor do tempo de processamento, assim como é feito no Fast Optimal Global Sequence Alignment Algorithm(FOGSAA)
+uso melhor do tempo de processamento, assim como é feito no Fast Optimal Global Sequence Alignment Algorithmb (FOGSAA).
 
-Porém, todo esse revés no tmpo de execução  não impede em nenhum momento o uso em uma aplicação real que retrata o 
+Porém, todo esse revés no tempo de execução não impede em nenhum momento o uso em uma aplicação real que retrata o 
 quanto essas operações criadas por Needleman e Wunsch foram importantes para o desenvolvimento e aprimoramento da humanidade até 
 o estado que vemos ela hoje. Trazendo a capacidade de transmitir e comparar em tempo real descobertas
 feitas ao redor do mundo de forma eficiente e prática.
