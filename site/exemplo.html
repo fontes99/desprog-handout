@@ -92,19 +92,37 @@ possiveis.</p>
 
 <p class="figure"><img alt="tabela 1" src="img/tabela-1.png" title="tabela 1" class="raster"/></p>
 
-<p>Na tabela acima, podemos ver que cada casa da matriz representa quantas ações são 
-feitas para transformar a substring correspondente da vertical na da horizontal.</p>
+<p>Você consegue deduzir oque significa cada casa dessa matriz?</p>
 
-<p>Vamos agora entender o preenchimento dessa tabela...</p>
+<h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
 
-<p>Os dois primeiros <code class="prettybox prettyprint">&#39;-&#39;</code> antes de cada string representa... nada!! isso mesmo, nada.</p>
+<p>Numa matriz dessa, cada casa representa quantas ações são 
+feitas para transformar a <em>substring</em> correspondente da vertical na da horizontal.</p>
+
+<p>Uma substring pode ser vista como toda a string do começo até o caractere da casa que estamos analisando</p>
+
+<p>Nesta tabela temos um exemplo de analise a uma casa da matriz que tem o valor <em>x</em></p>
+
+<p class="figure"><img alt="substring" src="img/substring.png" title="substring" class="raster"/></p>
+
+<p>As Substrings correspondentes da casa <em>x</em> estão pintadas de laranja.</p>
+
+<p>Seguindo o raciocínio, o valor <em>x</em> corresponderia a quantas ações são nessessarias para tranformar a substring <code class="prettybox prettyprint">&#39;TCCAG&#39;</code> em <code class="prettybox prettyprint">&#39;TGC&#39;</code></p>
+
+<p>Agora, como chegamos nesse valor <em>x</em>? Vamos entender o preenchimento dessa tabela...</p>
+
+<blockquote><p>Só continue se tiver entendido o conceito do valor de cada casa e de substrings</p></blockquote>
+
+<h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
+
+<p>Os dois primeiros <code class="prettybox prettyprint">&#39;-&#39;</code> antes de cada string representa... nada!! Isso mesmo, nada.</p>
 
 <p>Tratamos esse primeiro espaço como a substrig <code class="prettybox prettyprint">&#39; &#39;</code> (vazia) e, antes de explicar algo, 
 você consegue deduzir quantas ações realizamos para tranformar <em>nada</em> em <em>nada</em>?</p>
 
 <h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
 
-<p>Para tranformar nada em nada faremos..... 0 ações!</p>
+<p>Para tranformar nada em nada faremos..... 0 ações!   </p>
 
 <p>Começaremos nossa matriz com primeiro elemento 0.</p>
 
@@ -113,39 +131,43 @@ você consegue deduzir quantas ações realizamos para tranformar <em>nada</em> 
 <p>O proximo passo é pensar, antes de qualquer coisa, na primeira linha e na primeira coluna.</p>
 
 <p>Ainda antes de explicar a <em>manha</em> do algoritmo, você consegue deduzir as casas da matriz da 
-primeira linha e coluna?</p>
+primeira linha e primeira coluna?</p>
 
 <blockquote><p>DICA: </p><p>A primeira linha representa quantas ações faremos para tranformar nada em <code>&#39;T&#39;</code>, <code>&#39;TG&#39;</code>, <code>&#39;TGC&#39;</code>, ...
 E podemos ver a coluna com os mesmos olhos.</p></blockquote>
 
 <h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
 
-<p>Na primeira linha, temos que <strong>Inserir</strong> (uma ação) cada caractere da string em nada. Podemos 
-então deduzir a primeira linha...</p>
+<p>Na primeira linha, temos que <strong>Inserir</strong> (uma ação) cada caractere da substring em nada. Por exemplo, como dito na dica, para inserir <code class="prettybox prettyprint">&#39;T&#39;</code> em nada precisamos de uma ação, para inserir <code class="prettybox prettyprint">&#39;TG&#39;</code> em nada precisamos de duas, para inserir <code class="prettybox prettyprint">&#39;TGC&#39;</code> em nada precisamos de três e assim por diante.</p>
+
+<p>Podemos então deduzir a primeira linha...</p>
 
 <p class="figure"><img alt="tabela 3" src="img/tabela-3.png" title="tabela 3" class="raster"/></p>
 
-<p>E assim, analogamente, faremos com a primeira coluna também.</p>
+<p>Na primeira coluna, temos que <strong>Deletar</strong> (uma ação) cada caractere da substring para se tornar nada. Por exemplo, para deletar <code class="prettybox prettyprint">&#39;T&#39;</code> para nada precisamos de uma ação, para deletar <code class="prettybox prettyprint">&#39;TC&#39;</code> para nada precisamos de duas, para deletar <code class="prettybox prettyprint">&#39;TCC&#39;</code> para nada precisamos de três e assim por diante.</p>
 
 <p class="figure"><img alt="tabela 4" src="img/tabela-4.png" title="tabela 4" class="raster"/></p>
 
-<p>Estamos com o terreno arado para ccomeçar, de verdade, a lógica do algorítimo!</p>
+<p>Estamos com o terreno arado para começar, de verdade, a lógica do algoritimo!</p>
 
 <blockquote><p>Só avance se você entendeu as deduções de linhas e colunas...</p></blockquote>
 
 <h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
 
-<p>A <em>manha</em> do algorítimo é o seguinte:</p>
+<p>A <em>manha</em> do algoritimo é o seguinte:</p>
 
-<p class="figure"><img alt="ex" src="img/ex.png" title="ex" class="raster"/></p>
+<p>Olhando para a a tabela, vamos calcular o valor de uma casa. Representaremos esta casa com <em>x</em>.</p>
 
-<p>Iremos sempre olhar para um grupo de 4 casas e definir o valor da casa inferior direita (x) com 
-base nas outras.</p>
+<p class="figure"><img alt="abc-gande" src="img/abc-grande.png" title="abc-gande" class="raster"/></p>
 
-<p>Em suma, x vai ser igual a algum dos valores a, b ou c acrescentando o custo de uma ação (1). 
+<p>Agora, vamos olhar para as casas vizinhas de <em>x</em>, representado por <em>a</em>, <em>b</em> e <em>c</em>.</p>
+
+<p class="figure"><img alt="abc-pequeno" src="img/abc-pequeno.png" title="abc-pequeno" class="raster"/></p>
+
+<p>Em suma, x vai ser igual a algum dos valores <em>a</em>, <em>b</em> ou <em>c</em> acrescentando o custo de uma ação (1). 
 Portanto, x = a+1 ou b+1 ou c+1. </p>
 
-<p><em>Esta lembrado das ações que podemos realizar??</em></p>
+<p><em>Está lembrado das ações que podemos realizar?</em></p>
 
 <ul><li>A escolha de <em>a</em> equivale a uma Remoção</li><li>A escolha de <em>b</em> equivale a um Alinhamento</li><li>A escolha de <em>c</em> equivale a uma Inserção</li></ul>
 
@@ -153,7 +175,9 @@ Portanto, x = a+1 ou b+1 ou c+1. </p>
 
 <ul><li>Se escolhermos <em>a</em> iremos <strong>remover</strong> o caractére equivalente na horizontal</li><li>Se escolhermos <em>b</em> iremos <strong>alinhar</strong> o caractére equivalente na horizontal</li><li>Se escolhermos <em>c</em> iremos <strong>inserir</strong> o caractére equivalente na horizontal</li></ul>
 
-<p>Agora... Qual escolher?? </p>
+<p><em>Ressaltando, ao escolher um desses valores, você esta realizando a ação que eles representam também!</em> Por isso que quando completamos a primeira coluna nós deletamos e para a primeira linha inserimos.</p>
+
+<p>Agora... Qual escolher?</p>
 
 <p>Tente deduzir qual seria o melhor.</p>
 
@@ -176,7 +200,7 @@ Se não forem, não realizaremos nenhuma ação e o numero que somaremos não se
 
 <p>corrigindo o <em>pseudo-código</em> acima:</p>
 
-<pre class="prettybox"><code class="prettyprint">var x = min(a, b, c) + (if char1 != char2: 1, else: 0)</code></pre>
+<pre class="prettybox"><code class="prettyprint">var x = min(a, b, c) + (min(a, b, c) == b ? (char1 == char2 ? 0 : 1) : 1)                </code></pre>
 
 <p>Vamos agora completar nossa tabela!</p>
 
@@ -239,9 +263,9 @@ Portanto, o melhor a ser escolido é <em>b</em> porque não somaremos 1 no final
 
 <p class="figure"><img alt="tabela 12" src="img/tabela-12.png" title="tabela 12" class="raster"/></p>
 
-<p>Agora... Está lembrando da representação de cada movimento das ações? Volte nas listas da <em>manha</em> do algoítmo caso não lembre..</p>
+<p>Agora... Está lembrando da representação de cada movimento das ações? o que as casas <em>a</em>, <em>b</em> e <em>c</em> representavam? Quando escolhemos o menor numero entre <em>a</em>, <em>b</em> e <em>c</em>, estamos escolhendo a ação que eles representma também.</p>
 
-<h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
+<p>Volte nas listas da <em>manha</em> do algoítmo caso não lembre..</p>
 
 <p>Lemos essa linha do primeiro ítem da matriz para o último (sentido contrário do qual desenhamos) e seguimos as representações de cada movimento.</p>
 
@@ -255,13 +279,13 @@ Portanto, o melhor a ser escolido é <em>b</em> porque não somaremos 1 no final
 
 <p>Agora é com você! Abra a <a href="https://docs.google.com/document/d/1JDX5QX84NwbD50oPLMp6Nfql1hNU1o5R30aBSc74IuU/edit?usp=sharing" target="_blank">Tabela 2</a>, faça outro download ou cópia e tente completa-la com oque aprendeu.</p>
 
-<p class="figure"><img alt="tabela New" src="img/tabela-new.png" title="tabela New" class="raster"/></p>
+<p class="figure"><img alt="tabela-vazia" src="img/tabela-ex-vazia.png" title="tabela-vazia" class="raster"/></p>
 
 <blockquote><p>Qualquer dúvida é só chamar! mas antes, tente voltar nas explicações.</p></blockquote>
 
 <h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
 
-<p>Se tudo der certo... você chegou em uma tabela com (mais ou menos) essa cara:</p>
+<p>Se tudo der certo... você chegou em uma tabela com, mais ou menos, essa cara:</p>
 
 <p class="figure"><img alt="tabela Resultado" src="img/tabela-resultado.png" title="tabela Resultado" class="raster"/></p>
 
@@ -273,11 +297,113 @@ Portanto, o melhor a ser escolido é <em>b</em> porque não somaremos 1 no final
 
 <p class="figure"><img alt="tabela linha" src="img/tabela-linha.png" title="tabela linha" class="raster"/></p>
 
-<p>Que tal fazermos isso em código agora!</p>
+<h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
+
+<h2>Utilização na biotecnologia</h2>
+
+<p>Com o passar dos anos, cada vez mais, o algoritmo de Needleman e Wunsch foi sendo 
+reconhecido como ferramenta fundamental para a análise de proteínas no desenvolvimento 
+e sintetização de vacinas para o combate de doenças.</p>
+
+<p>É graças ao que esses caras desenvolveram nessa época que conseguimos hoje ter 
+acesso de forma fácil e simples a ferramentas complexas de análise genética só que
+do conforto de casa.</p>
+
+<p>Um exemplo dessas ferramentas é o <a href="https://blast.ncbi.nlm.nih.gov/Blast.cgi" target="_blank">Blast</a>.</p>
+
+<p>Chegando no site, você vai se deparar com essa imagem. Clique no botão que a &quot;setinha&quot; aponta.</p>
+
+<p class="figure"><img alt="Clique em Protein Blast" src="img/blast-3.jpg" title="Clique em Protein Blast" class="raster"/></p>
+
+<p>Na página seguinte, insira nessa caixa de texto maiorzinha o seguinte código proteico.</p>
+
+<p class="figure"><img alt="Enter accession number(s), gi(s), or FASTA sequence(s)" src="img/blast-1.png" title="Enter accession number(s), gi(s), or FASTA sequence(s)" class="raster"/></p>
+
+<pre class="prettybox"><code class="prettyprint">BETA-GALACTOSIDASE|BIFIDOBACTERIUM BIFIDUM S17 (883062)
+MSKRRKHSWPQPLKGAESRLWYGGDYNPDQWPEEVWDDDIRLMKKAGVNLVSVGIFSWAKIEPEEGKYDFDWLDRA
+IDKLGKAGIAVDLASATASPPMWLTQAHPEVLWKDERGDTVWPGAREHWRPTSPVFREYALNLCRRMAEHYKGNPY
+VVAWHVSNEYGCHNRFDYSDDAMRAFQKWCKKRYKTIDAVNEAWGTAFWAQHMNDFSEIIPPRYIGDGNFMNPGKL
+LDYKRFSSDALKELYIAERDVLESITPGLPLTTNFMVSAGGSMLDYDDWGAEVDFVSNDHYFTPGEAHFDEVAYAA
+SLMDGISRKEPWFQMEHSTSAVNWRPINYRAEPGSVVRDSLAQVAMGADAICYFQWRQSKAGAEKWHSSMVPHAGE
+DSQIFRDVCELGADLGRLSDEGLMGTKTVKSKVAVVFDYESQWATEYTANPTQQVDHWTEPLDWFRALADNGITAD
+VVPVRSDWDSYEIAVLPCVYLLSEETSRRVREFVANGGKLFVTYYTGLSDENDHIWLGGYPGSIRDVVGVRVEEFA
+PMGNDMPGALDHLDLDNGTVAHDFADVITSTADTSTVLASYKAERWTGMNEVPAIVANGYGDGRTVYVGCRLGRQG
+LAKSLPAMLGSMGLSDLAGDGRVLRVERADAAAASHFEFVFNRTHEPVTVDVEGEAIAASLAHVDDGRATIDPTGV
+VVLRR</code></pre>
+
+<p>Na mesma página, você terá que selecionar o set de busca que deseja no dropdown indicado na imagem
+a seguir.</p>
+
+<p class="figure"><img alt="Database" src="img/blast-2.png" title="Database" class="raster"/></p>
+
+<p>Selecione a opção Protein Data Bank proteins(PDB)</p>
+
+<p>Em seguida clica em BLAST no fim da página.</p>
+
+<p>O programa vai rodar o algoritmo apresentado comparando a sequencia proteica que eu lhe forneci
+com as milhares que ele tem no PDB que é um Data Bank Mundial. E na página seguinte no fim dela ele 
+vai retornar todas as bases proteicas que foram comparadas com a sua e os percentuais de 
+similaridades.</p>
+
+<blockquote><p>Vale resaltar que o BLAST é uma das ferramentas que esta sendo utilizadas no combate ao COVID-19
+pois serve como forma de comparacão rápida dos diversos sequenciamentos geneticos ao redor do mundo.</p></blockquote>
 
 <h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
 
-<h2>Vamos implementar!</h2>
+<h2>Análise da complexidade do algoritimo e conclução</h2>
+
+<p>Nesse handout trabalhamos um algoritimo sequencial que se mostrou importante para muito do que se tem
+desenvolvido na genetica. Em resumo sua implementação consiste em ter duas strings para comparacão
+e fazer o uso das tecnicas de construção da matrix que ensinamos para achar a quantidade de modificações
+necessárias para transformar uma string na outra, em seguida usamos as ações especiais pra deixar as
+strings iguais.</p>
+
+<p>Vimos também durante o handout como fazer a implementação desse algoritmo em Python. Usamos funções para
+preparar a matriz pra resolver checando alinhamento dos caracteres e deletando ou inserindo caso
+fosse necessário.</p>
+
+<p>Mas acho que falo por vocês quando digo: 
+    &quot;Beleza, mas qual a verdadeira complexidade disso?&quot;</p>
+
+<p>Você consegue pensar na complexidade gerada pelo algoritmo só observando o código que você criou?</p>
+
+<blockquote><p>Dê um pausa de 2 min e discuta com seus colegas de mesa sobre isso</p></blockquote>
+
+<h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
+
+<p>Se formos calcular puramente essa complexidade facilmente você consegue deduzir que ela é feita através
+da multiplicação de duas matrizes com n colunas e uma linha. O que nos entrega uma uma complexidade \(n^2\). Porém esse é um 
+dos casos que conseguimos reduzir o número de operações através do uso do método dos 4 Russos. </p>
+
+<p>Um favor que eu peço é pra que você não abra o link agora, se não você vai me odiar e não é isso que queremos. 
+Por isso eu vou resumir pra você. Mas se após o Handout você ficar mais curioso para conhecer melhor esse método, 
+dai pra frente é sua conta em risco.</p>
+
+<h2>Método 4 russos</h2>
+
+<p>Esse <a href="https://www.youtube.com/watch?v=cYJrMUvJQGc" target="_blank">método</a> leva em consideração que operações ja feitos e exatamente iguais não precisam ser repetidos pois ja sabemos 
+o resultado delas, só nos basta substituir. Esse simples conceito já é capaz de reduzir nossa complexidade de \(n^2\) para nm, sendo m um número menor que n o que em termos de processamento já ajuda bastante.</p>
+
+<p>Apesar de ser um algoritimo primordial por ser muito utilizado quando se quer um excelente alinhamento global para o 
+desenvolvimento da Bioinformática, era de se esperar que com o passar dos anos ele fosse desbancado pro outros como um
+uso melhor do tempo de processamento, assim como é feito no Fast Optimal Global Sequence Alignment Algorithmb (FOGSAA).</p>
+
+<p>Porém, todo esse revés no tempo de execução não impede em nenhum momento o uso em uma aplicação real que retrata o 
+quanto essas operações criadas por Needleman e Wunsch foram importantes para o desenvolvimento e aprimoramento da humanidade até 
+o estado que vemos ela hoje. Trazendo a capacidade de transmitir e comparar em tempo real descobertas
+feitas ao redor do mundo de forma eficiente e prática.</p>
+
+<blockquote><p>A ideia do algoritmo é a demonstrada até aqui.
+Para quem quiser entender um pouco mais dele, junto com uma implementação em python,
+clique em continuar, caso contrário, ele termina por aqui! Muito obrigado =)</p></blockquote>
+
+<h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
+
+<h2>Então você é curioso e quer continuar!?</h2>
+
+<p class="figure"><img alt="doge_programmer" src="img/doge_programmer.jpg" title="doge_programmer" class="raster"/></p>
+
+<h2>Então vamos implementar!</h2>
 
 <p>Agora que já entendemos a lógica do funcionamento, vamos implementar isto em uma
 ferramenta muito conhecido por todos nós: o <em>Python</em>!</p>
@@ -452,7 +578,7 @@ print(z)</code></pre>
         # Então realizamos o passo para a direção andada
         return alinhamento_final(matriz[:m][:n+1], m - 1, n)</code></pre>
 
-<p>Agora só precisamos criar uma variável global para ser nossa lista de soluções e chamar a função com a matriz resultante da função <em>resolve_matriz</em>.</p>
+<p>Agora só precisamos criar uma variável global para ser nossa lista de soluções e chamar a função com a matriz resultante da função <em>resolve_matriz</em>. É importante lembrar também que precisamos inverter a matriz <em>solution</em> para o print na saída ser da forma que esperamos!</p>
 
 <pre class="prettybox"><code class="prettyprint">x = &quot;TCCAGT&quot;
 y = &quot;TGCCTAG&quot;
@@ -479,102 +605,6 @@ Alinhar_G
 Remover_T</code></pre>
 
 <p>Exatamente o que havíamos previsto novamente quando simulamos na mão!!!</p>
-
-<h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
-
-<h2>Utilização na biotecnologia</h2>
-
-<p>Com o passar dos anos, cada vez mais, o algoritmo de Needleman e Wunsch foi sendo 
-reconhecido como ferramenta fundamental para a análise de proteínas no desenvolvimento 
-e sintetização de vacinas para o combate de doenças.</p>
-
-<p>É graças ao que esses caras desenvolveram nessa época que conseguimos hoje ter 
-acesso de forma fácil e simples a ferramentas complexas de análise genética só que
-do conforto de casa.</p>
-
-<p>Um exemplo dessas ferramentas é o <a href="https://blast.ncbi.nlm.nih.gov/Blast.cgi" target="_blank">Blast</a>.</p>
-
-<p>Chegando no site, você vai se deparar com essa imagem. Clique no botão que a &quot;setinha&quot; aponta.</p>
-
-<p class="figure"><img alt="Clique em Protein Blast" src="img/blast-3.jpg" title="Clique em Protein Blast" class="raster"/></p>
-
-<p>Na página seguinte, insira nessa caixa de texto maiorzinha o seguinte código proteico.</p>
-
-<p class="figure"><img alt="Enter accession number(s), gi(s), or FASTA sequence(s)" src="img/blast-1.png" title="Enter accession number(s), gi(s), or FASTA sequence(s)" class="raster"/></p>
-
-<pre class="prettybox"><code class="prettyprint">BETA-GALACTOSIDASE|BIFIDOBACTERIUM BIFIDUM S17 (883062)
-MSKRRKHSWPQPLKGAESRLWYGGDYNPDQWPEEVWDDDIRLMKKAGVNLVSVGIFSWAKIEPEEGKYDFDWLDRA
-IDKLGKAGIAVDLASATASPPMWLTQAHPEVLWKDERGDTVWPGAREHWRPTSPVFREYALNLCRRMAEHYKGNPY
-VVAWHVSNEYGCHNRFDYSDDAMRAFQKWCKKRYKTIDAVNEAWGTAFWAQHMNDFSEIIPPRYIGDGNFMNPGKL
-LDYKRFSSDALKELYIAERDVLESITPGLPLTTNFMVSAGGSMLDYDDWGAEVDFVSNDHYFTPGEAHFDEVAYAA
-SLMDGISRKEPWFQMEHSTSAVNWRPINYRAEPGSVVRDSLAQVAMGADAICYFQWRQSKAGAEKWHSSMVPHAGE
-DSQIFRDVCELGADLGRLSDEGLMGTKTVKSKVAVVFDYESQWATEYTANPTQQVDHWTEPLDWFRALADNGITAD
-VVPVRSDWDSYEIAVLPCVYLLSEETSRRVREFVANGGKLFVTYYTGLSDENDHIWLGGYPGSIRDVVGVRVEEFA
-PMGNDMPGALDHLDLDNGTVAHDFADVITSTADTSTVLASYKAERWTGMNEVPAIVANGYGDGRTVYVGCRLGRQG
-LAKSLPAMLGSMGLSDLAGDGRVLRVERADAAAASHFEFVFNRTHEPVTVDVEGEAIAASLAHVDDGRATIDPTGV
-VVLRR</code></pre>
-
-<p>Na mesma página, você terá que selecionar o set de busca que deseja no dropdown indicado na imagem
-a seguir.</p>
-
-<p class="figure"><img alt="Database" src="img/blast-2.png" title="Database" class="raster"/></p>
-
-<p>Selecione a opção Protein Data Bank proteins(PDB)</p>
-
-<p>Em seguida clica em BLAST no fim da página.</p>
-
-<p>O programa vai rodar o algoritmo apresentado comparando a sequencia proteica que eu lhe forneci
-com as milhares que ele tem no PDB que é um Data Bank Mundial. E na página seguinte no fim dela ele 
-vai retornar todas as bases proteicas que foram comparadas com a sua e os percentuais de 
-similaridades.</p>
-
-<blockquote><p>Vale resaltar que o BLAST é uma das ferramentas que esta sendo utilizadas no combate ao COVID-19
-pois serve como forma de comparacão rápida dos diversos sequenciamentos geneticos ao redor do mundo.</p></blockquote>
-
-<h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
-
-<h2>Análise da complexidade do algorítimo e conclução</h2>
-
-<p>Nesse handout trabalhamos um algorítimo sequencial que se mostrou importante para muito do que se tem
-desenvolvido na genetica. Em resumo sua implementação consiste em ter duas strings para comparacão
-e fazer o uso das tecnicas de construção da matrix que ensinamos para achar a quantidade de modificações
-necessárias para transformar uma string na outra, em seguida usamos as ações especiais pra deixar as
-strings iguais.</p>
-
-<p>Vimos também durante o handout como fazer a implementação desse algoritmo em Python. Usamos funções para
-preparar a matriz pra resolver checando alinhamento dos caracteres e deletando ou inserindo caso
-fosse necessário.</p>
-
-<p>Mas acho que falo por vocês quando digo: 
-    &quot;Beleza, mas qual a verdadeira complexidade disso?&quot;</p>
-
-<p>Você consegue pensar na complexidade gerada pelo algoritmo só observando o código que você criou?</p>
-
-<blockquote><p>De um pausa de 2 min e discuta com seus colegas de mesa sobre isso</p></blockquote>
-
-<h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
-
-<p>Se formos calcular puramente essa complexidade facilmente você consegue deduzir que ela é feita através
-da multiplicação de duas matrizes com n colunas e uma linha. O que nos entrega uma uma complexidade n^2. Porém esse é um 
-dos casos que conseguimos reduzir o número de operações através do uso do método dos 4 Russos. </p>
-
-<p>Um favor que eu peço é pra que você não abra o link agora, se não você vai me odiar e não é isso que queremos. 
-Por isso eu vou resumir pra você. Mas se após o Handout você ficar mais curioso para conhecer melhor esse método, 
-dai pra frente é sua conta em risco.</p>
-
-<h2>Método 4 russos</h2>
-
-<p>Esse <a href="https://www.youtube.com/watch?v=cYJrMUvJQGc" target="_blank">método</a> leva em consideração que operações ja feitos e exatamente iguais não precisam ser repetidos pois ja sabemos 
-o resultado delas, só nos basta substituir. Esse simples conceito já é capaz de reduzir nossa complexidade de \(n^2\) para nm, sendo m um número menor que n o que em termos de processamento já ajuda bastante.</p>
-
-<p>Apesar de ser um algoritimo primordial por ser muito utilizado quando se quer um excelente alinhamento global para o 
-desenvolvimento da Bioinformática, era de se esperar que com o passar dos anos ele fosse desbancado pro outros como um
-uso melhor do tempo de processamento, assim como é feito no Fast Optimal Global Sequence Alignment Algorithmb (FOGSAA).</p>
-
-<p>Porém, todo esse revés no tempo de execução não impede em nenhum momento o uso em uma aplicação real que retrata o 
-quanto essas operações criadas por Needleman e Wunsch foram importantes para o desenvolvimento e aprimoramento da humanidade até 
-o estado que vemos ela hoje. Trazendo a capacidade de transmitir e comparar em tempo real descobertas
-feitas ao redor do mundo de forma eficiente e prática.</p>
 
 <blockquote><p>Obrigado por ter acompanhado até aqui! =)</p></blockquote>
 
