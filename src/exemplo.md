@@ -106,6 +106,9 @@ Agora, como chegamos nesse valor *x*? Vamos entender o preenchimento dessa tabel
 
 ###
 
+Pergunta
+---
+
 Os dois primeiros `'-'` antes de cada string representa... nada!! Isso mesmo, nada.
 
 Tratamos esse primeiro espaço como a substrig `' '` (vazia) e, antes de explicar algo, 
@@ -265,7 +268,7 @@ Para isso, vamos desenhar uma linha guia começando do ultimo elemento e ligando
 
 ![tabela 12](tabela-12.png)
 
-Agora... Está lembrando da representação de cada movimento das ações? o que as casas *a*, *b* e *c* representavam? Quando escolhemos o menor numero entre *a*, *b* e *c*, estamos escolhendo a ação que eles representma também.
+Agora... Está lembrando da representação de cada movimento das ações? o que as casas *a, b e c* representavam? Quando escolhemos o menor numero entre *a, b e c*, estamos escolhendo a ação que eles representam também.
  
 Volte nas listas da *manha* do algoítmo caso não lembre..
 
