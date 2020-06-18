@@ -10,7 +10,8 @@ solucionar o problema de encontrar similaridades entre estas, o que era
 uma necessidade para a área de estudo da genética.
 
 De forma geral, o algoritmo consiste em analisar duas palavras e verificar
-quantas mudanças seriam necessárias para tornar uma palavra igual a outra.
+quantas mudanças seriam necessárias para tornar uma palavra igual a outra, querendo 
+sempre o *MENOR* numero de ações possivel
 
 Exemplo
 ---
@@ -44,7 +45,9 @@ alcançar nosso objetivo:
 
 >O alinhamento só conta efetivamente como "ação" se os caracteres forem *diferentes*. 
 >Se forem iguais, Alinhar pode ser interpretado como "pular uma ação" já que os caracteres 
->estão devidamente *alinhados*. ***(lembre-se disso, pois usaremos na lógica)***
+>estão devidamente *alinhados*. 
+
+>*(lembre-se disso, pois usaremos na lógica)*
 
 Dessa forma podemos realizar pequenas e pontuais mudanças. Começaremos deletando o primeiro
 caractere de "*OCORRENCIA*", pois como vemos em nossa base, ele não existe, assim temos:
@@ -160,9 +163,6 @@ Agora, vamos olhar para as casas vizinhas de *x*, representado por *a*, *b* e *c
 
 ![abc-pequeno](abc-pequeno.png)
 
-Em suma, x vai ser igual a algum dos valores *a*, *b* ou *c* acrescentando o custo de uma ação (1). 
-Portanto, x = a+1 ou b+1 ou c+1. 
-
 *Está lembrado das ações que podemos realizar?*
 
 * A escolha de *a* equivale a uma Remoção
@@ -177,13 +177,16 @@ Ou seja..
 
 *Ressaltando, ao escolher um desses valores, você esta realizando a ação que eles representam também!* Por isso que quando completamos a primeira coluna nós deletamos e para a primeira linha inserimos.
 
+Em suma, x vai ser igual a algum dos valores *a*, *b* ou *c* acrescentando o custo de uma ação (que é 1). 
+Portanto, *x = a+1 ou b+1 ou c+1.*
+
 Agora... Qual escolher?
 
 Tente deduzir qual seria o melhor.
 
 >DICA:
 
->Tente lembrar do significado dos numeros das casas...
+>Tente lembrar do significado dos numeros das casas e do objetivo do algorítimo...
 
 ###
 
@@ -202,7 +205,22 @@ Se não forem, não realizaremos nenhuma ação e o numero que somaremos não se
 
 corrigindo o *pseudo-código* acima:
 
-    var x = min(a, b, c) + (min(a, b, c) == b ? (char1 == char2 ? 0 : 1) : 1)                
+    var x = min(a, b, c) + z
+    
+sendo que:
+    
+    if (min(a, b, c) == b){
+        if (char1 == char2){
+            var z = 0
+        }
+        else{
+            var z = 1
+        }
+    }
+
+    else{
+        var z = 1
+    }
 
 
 Vamos agora completar nossa tabela!
@@ -289,26 +307,6 @@ Na string `'TCCAGT'` nós:
 * Removemos T -> `'TGCCTAG'` 
  
 Transformamos a string `'TCCAGT'` em `'TGCCTAG'`
-
-Agora é com você! Abra a [Tabela 2](https://docs.google.com/document/d/1JDX5QX84NwbD50oPLMp6Nfql1hNU1o5R30aBSc74IuU/edit?usp=sharing), faça outro download ou cópia e tente completa-la com oque aprendeu.
-
-![tabela-vazia](tabela-ex-vazia.png)
-
->Qualquer dúvida é só chamar! mas antes, tente voltar nas explicações.
-
-
-###
-
-Se tudo der certo... você chegou em uma tabela com, mais ou menos, essa cara:
-
-![tabela Resultado](tabela-resultado.png)
-
-Agora tente traçar a linha referente aos passos dados.
-###
-
-Algo parecido? Se sim, show! acabamos a teoria. Sinta-se encorajado a tirar qualquer dúvida ainda existente
-
-![tabela linha](tabela-linha.png)
 
 ###
 

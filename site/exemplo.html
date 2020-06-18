@@ -27,7 +27,8 @@ solucionar o problema de encontrar similaridades entre estas, o que era
 uma necessidade para a área de estudo da genética.</p>
 
 <p>De forma geral, o algoritmo consiste em analisar duas palavras e verificar
-quantas mudanças seriam necessárias para tornar uma palavra igual a outra.</p>
+quantas mudanças seriam necessárias para tornar uma palavra igual a outra, querendo 
+sempre o <em>MENOR</em> numero de ações possivel</p>
 
 <h2>Exemplo</h2>
 
@@ -56,7 +57,7 @@ alcançar nosso objetivo:</p>
 
 <blockquote><p>Observação:</p><p>O alinhamento só conta efetivamente como &quot;ação&quot; se os caracteres forem <em>diferentes</em>. 
 Se forem iguais, Alinhar pode ser interpretado como &quot;pular uma ação&quot; já que os caracteres 
-estão devidamente <em>alinhados</em>. <strong>*(lembre-se disso, pois usaremos na lógica)</strong>*</p></blockquote>
+estão devidamente <em>alinhados</em>. </p><p><em>(lembre-se disso, pois usaremos na lógica)</em></p></blockquote>
 
 <p>Dessa forma podemos realizar pequenas e pontuais mudanças. Começaremos deletando o primeiro
 caractere de &quot;<em>OCORRENCIA</em>&quot;, pois como vemos em nossa base, ele não existe, assim temos:</p>
@@ -166,9 +167,6 @@ E podemos ver a coluna com os mesmos olhos.</p></blockquote>
 
 <p class="figure"><img alt="abc-pequeno" src="img/abc-pequeno.png" title="abc-pequeno" class="raster"/></p>
 
-<p>Em suma, x vai ser igual a algum dos valores <em>a</em>, <em>b</em> ou <em>c</em> acrescentando o custo de uma ação (1). 
-Portanto, x = a+1 ou b+1 ou c+1. </p>
-
 <p><em>Está lembrado das ações que podemos realizar?</em></p>
 
 <ul><li>A escolha de <em>a</em> equivale a uma Remoção</li><li>A escolha de <em>b</em> equivale a um Alinhamento</li><li>A escolha de <em>c</em> equivale a uma Inserção</li></ul>
@@ -179,11 +177,14 @@ Portanto, x = a+1 ou b+1 ou c+1. </p>
 
 <p><em>Ressaltando, ao escolher um desses valores, você esta realizando a ação que eles representam também!</em> Por isso que quando completamos a primeira coluna nós deletamos e para a primeira linha inserimos.</p>
 
+<p>Em suma, x vai ser igual a algum dos valores <em>a</em>, <em>b</em> ou <em>c</em> acrescentando o custo de uma ação (que é 1). 
+Portanto, <em>x = a+1 ou b+1 ou c+1.</em></p>
+
 <p>Agora... Qual escolher?</p>
 
 <p>Tente deduzir qual seria o melhor.</p>
 
-<blockquote><p>DICA:</p><p>Tente lembrar do significado dos numeros das casas...</p></blockquote>
+<blockquote><p>DICA:</p><p>Tente lembrar do significado dos numeros das casas e do objetivo do algorítimo...</p></blockquote>
 
 <h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
 
@@ -202,7 +203,22 @@ Se não forem, não realizaremos nenhuma ação e o numero que somaremos não se
 
 <p>corrigindo o <em>pseudo-código</em> acima:</p>
 
-<pre class="prettybox"><code class="prettyprint">var x = min(a, b, c) + (min(a, b, c) == b ? (char1 == char2 ? 0 : 1) : 1)                </code></pre>
+<pre class="prettybox"><code class="prettyprint">var x = min(a, b, c) + z</code></pre>
+
+<p>sendo que:</p>
+
+<pre class="prettybox"><code class="prettyprint">if (min(a, b, c) == b){
+    if (char1 == char2){
+        var z = 0
+    }
+    else{
+        var z = 1
+    }
+}
+
+else{
+    var z = 1
+}</code></pre>
 
 <p>Vamos agora completar nossa tabela!</p>
 
@@ -278,26 +294,6 @@ Portanto, o melhor a ser escolido é <em>b</em> porque não somaremos 1 no final
 <ul><li>Alinhamos T -&gt; <code class="prettybox prettyprint">&#39;TCCAGT&#39;</code> (continua igual em alinhamentos com caracteres iguais)</li><li>Inserimos G -&gt; <code class="prettybox prettyprint">&#39;TGCCAGT&#39;</code></li><li>Alinhamos C -&gt; <code class="prettybox prettyprint">&#39;TGCCAGT&#39;</code></li><li>Alinhamos C -&gt; <code class="prettybox prettyprint">&#39;TGCCAGT&#39;</code> </li><li>Inserimos T -&gt; <code class="prettybox prettyprint">&#39;TGCCTAGT&#39;</code> </li><li>Alinhamos A -&gt; <code class="prettybox prettyprint">&#39;TGCCTAGT&#39;</code> </li><li>Alinhamos G -&gt; <code class="prettybox prettyprint">&#39;TGCCTAGT&#39;</code></li><li>Removemos T -&gt; <code class="prettybox prettyprint">&#39;TGCCTAG&#39;</code> </li></ul>
 
 <p>Transformamos a string <code class="prettybox prettyprint">&#39;TCCAGT&#39;</code> em <code class="prettybox prettyprint">&#39;TGCCTAG&#39;</code></p>
-
-<p>Agora é com você! Abra a <a href="https://docs.google.com/document/d/1JDX5QX84NwbD50oPLMp6Nfql1hNU1o5R30aBSc74IuU/edit?usp=sharing" target="_blank">Tabela 2</a>, faça outro download ou cópia e tente completa-la com oque aprendeu.</p>
-
-<p class="figure"><img alt="tabela-vazia" src="img/tabela-ex-vazia.png" title="tabela-vazia" class="raster"/></p>
-
-<blockquote><p>Qualquer dúvida é só chamar! mas antes, tente voltar nas explicações.</p></blockquote>
-
-<h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
-
-<p>Se tudo der certo... você chegou em uma tabela com, mais ou menos, essa cara:</p>
-
-<p class="figure"><img alt="tabela Resultado" src="img/tabela-resultado.png" title="tabela Resultado" class="raster"/></p>
-
-<p>Agora tente traçar a linha referente aos passos dados.</p>
-
-<h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
-
-<p>Algo parecido? Se sim, show! acabamos a teoria. Sinta-se encorajado a tirar qualquer dúvida ainda existente</p>
-
-<p class="figure"><img alt="tabela linha" src="img/tabela-linha.png" title="tabela linha" class="raster"/></p>
 
 <h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
 
